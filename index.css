@@ -1,11 +1,24 @@
 h1 {
   text-align: center;
   font-size: 50px;
+  margin: 0;
+}
+
+h2 {
+  text-align: center;
+  font-size: 100px;
+  margin: 0;
+}
+
+h3 {
+  text-align: left;
+  font-size: 50px;
+  margin: 0;
 }
 
 body {
-  background-color: #6e3b3b;
-  color: goldenrod;
+  background-color:#b5ad9a;
+  color: rgb(17, 14, 6);
 }
 
 .field {
@@ -15,7 +28,7 @@ body {
 
 .fieldRow {
   display: grid;
-  grid-template-columns: 88% 5%;
+  grid-template-columns: 77% 5%;
 }
 
 .fieldGrid {
@@ -42,6 +55,7 @@ body {
   grid-template-rows: 100px 100px;
   grid-gap: 30px;
   font-size: 30px;
+  justify-items: center;
 }
 
 .noshow {
@@ -49,6 +63,7 @@ body {
   grid-template-columns: auto auto auto auto;
   grid-gap: 30px;
   grid-template-rows: 100px 100px;
+  justify-items: center;
 }
 
 .players {
@@ -121,7 +136,7 @@ button {
   box-shadow: 0 6px 10px 0 #666;
   transition: all 0.1s ease-in-out;
 
-  color: orange;
+  color:#b3ac9e;
   text-align: center;
   width: 130px;
 }
@@ -143,6 +158,6 @@ button:hover {
 
 .pageNav {
   display: grid;
-  grid-template-columns: 33%  33% 33% 30%;
+  grid-template-columns: auto auto auto auto;
   width: 100%;
 }

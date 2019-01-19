@@ -1,5 +1,5 @@
 import { tableSetup, playerSetup } from "./setup.js";
-import { setupScreen, setupField, setupName } from "./gears.js";
+import { setupScreen, setupField, setupFields } from "./gears.js";
 
 const standard = [
   { name: "Player 1", place: "pitch" },
@@ -18,8 +18,8 @@ setupScreen("setup");
 setupScreen("play");
 setupScreen("team");
 setupScreen("fix");
-setupField("players", players.map(p => p.name));
-setupName();
+setupFields("players", players.map(p => p.name));
+setupField("teamName");
 
 const bench = players.filter(player => player.place === "bench");
 const pitch = players.filter(player => player.place === "pitch");

@@ -37,7 +37,7 @@ const createAddBut = (holder, name, id, row, take) => {
   button.onclick = () => {
     adder(holder, name, id, row, take);
   };
-  return button
+  return button;
 };
 
 const adder = (holder, name, id, add, row, take) => {
@@ -54,7 +54,7 @@ const createField = (holder, name, value, id, more = true) => {
   field.id = name + "--" + id;
   field.classList.add("field");
   field.focus();
- 
+
   const takeBut = createTakeBut(field);
   const addBut = createAddBut(holder, name, id, row, takeBut);
 
@@ -69,7 +69,7 @@ const createField = (holder, name, value, id, more = true) => {
   return field;
 };
 
-const listen = (field,fn) => {
+const listen = (field, fn) => {
   const changed = e => fn(e);
   field.addEventListener("change", e => changed(e));
   field.addEventListener("keypress", e => {
@@ -79,31 +79,40 @@ const listen = (field,fn) => {
   });
   field.addEventListener("onpaste", e => changed(e));
   field.addEventListener("oninput", e => changed(e));
-}
+};
 
-const save = (fields)=>{
-  const players = fields.map((field,index) => {
-    const place = (index > 5)? "bench" : "pitch";
-    return { name: field.value,place};
+const save = fields => {
+  const players = fields.map((field, index) => {
+    const place = index > 5 ? "bench" : "pitch";
+    return { name: field.value, place };
   });
   window.localStorage.setItem("players", JSON.stringify(players));
+};
+
+export function setupField(id = "teamName") {
+  const stored = window.localStorage.getItem(id);
+  const value = (stored)? stored : "";
+  
+  const main = document.getElementById(id + "Input");
+  const display = document.getElementById(id + "Display");
+
+  main.value = value;
+  display.innerText = value;
+
+  listen(main, e => {
+    window.localStorage.setItem(id, e.target.value);
+    display.innerText = e.target.value;
+  });
 }
 
-export function setupName(){
-  const main = document.getElementById("teamNameInput");
-  listen(main,(e)=>{
-      window.localStorage.setItem("name", e.target.value);
-  }) 
-}
-
-export function setupField(name, values = [""]) {
+export function setupFields(name, values = [""]) {
   const main = document.getElementById(name);
   const holder = document.createElement("div");
   holder.classList.add("fieldGrid");
   const fields = values.map((value, i) => {
-   const field = createField(holder, name, value, i, i + 1 !== values.length);
-   listen(field, e => save(fields));
-   return field;
+    const field = createField(holder, name, value, i, i + 1 !== values.length);
+    listen(field, e => save(fields));
+    return field;
   });
   main.appendChild(holder);
   return fields;
