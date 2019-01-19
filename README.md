@@ -11,6 +11,10 @@ This is hosted on github pages [here](http://bangbangsoftware.github.io/footswel
 A quick introduction of the minimal setup you need to get a hello world up &
 running.
 
+## Security
+
+Everything is stored locally, so as long as your local storage is safe, so is your data.
+
 ## Developing
 
 A pure js application that makes great use of local storage. 
@@ -38,13 +42,13 @@ npm run e2e - currently there are none
 npm test
 ```
 
-### Built With
+### Built with
 Nothing, just pure JS.
 
 ### Prerequisites
 Nothing, no back end, no babel... just go.
 
-### Setting up Dev
+### Setting up dev
 
 Here's a brief intro about what a developer must do in order to start developing
 the project further:
@@ -68,18 +72,18 @@ npm run build
 
 ## To Do
 
-[X] Team layout design
-[x] Team layout, with toggle buttons
-[x] README - this
-[ ] linting
-[ ] jest
-[x] Team setup page
-[ ] Vrs Field
-[ ] Home and away toggle buttons
-[x] Start Button
-[ ] Playing layout design
-[ ] import / export
-[ ] put on github pages
+* [X] Team layout design
+* [x] Team layout, with toggle buttons
+* [x] README - this
+* [ ] linting
+* [ ] jest
+* [x] Team setup page
+* [ ] Vrs Field
+* [ ] Home and away toggle buttons
+* [x] Start Button
+* [ ] Playing layout design
+* [ ] import / export
+* [ ] put on github pages
 
 ## Versioning
 

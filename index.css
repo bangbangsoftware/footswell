@@ -15,7 +15,7 @@ body {
 
 .fieldRow {
   display: grid;
-  grid-template-columns: 76% 30%;
+  grid-template-columns: 88% 5%;
 }
 
 .fieldGrid {
@@ -63,6 +63,16 @@ body {
 .fieldBut {
   font-size: 80px;
 }
+
+.teamName {
+  padding: 100px;
+}
+
+.teamNameInput {
+  font-size: 120px;
+  width: 100%;
+}
+
 
 .nav {
   font-size: 30px;
@@ -133,6 +143,6 @@ button:hover {
 
 .pageNav {
   display: grid;
-  grid-template-columns: auto auto auto auto;
+  grid-template-columns: 33%  33% 33% 30%;
   width: 100%;
 }

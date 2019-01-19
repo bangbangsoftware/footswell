@@ -89,6 +89,13 @@ const save = (fields)=>{
   window.localStorage.setItem("players", JSON.stringify(players));
 }
 
+export function setupName(){
+  const main = document.getElementById("teamNameInput");
+  listen(main,(e)=>{
+      window.localStorage.setItem("name", e.target.value);
+  }) 
+}
+
 export function setupField(name, values = [""]) {
   const main = document.getElementById(name);
   const holder = document.createElement("div");
