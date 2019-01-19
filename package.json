@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "start": "live-server"
+    "start": "live-server",
+    "build": "cp *.js ./docs/. && cp *.css ./docs/. && cp *.html ./docs/."
   },
   "keywords": [
     "football",

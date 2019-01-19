@@ -1,0 +1,46 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="./index.css" />
+  </head>
+  <body>
+    <h1 id="title">Foot Swell</h1>
+
+
+    <div id="pageNav" class="pageNav">
+      <button id="teamBut" class="nav">TEAM</button>
+      <button id="playBut" class="nav">START</button>
+      <button id="setupBut" class="nav selected">SETUP</button>
+      <button id="fixBut" class="nav">FIXTURES</button>
+    </div>
+
+
+    <div id="team" class="hide">
+      <div class="teamName">
+          <input id="teamNameInput" placeholder="Team Name" class="teamNameInput"></input>
+      </div>
+      <div id="players"></div
+    ></div>
+
+
+    <div id="setup">
+      <h2 id="teamNameDisplay"></h2>
+      <div class="table">
+         <div><h3>On the pitch</h3></div>
+         <div id="pitch" class="formation"></div>
+         <div><h3>On the bench</h3></div>
+         <div id="bench" class="bench"></div>
+         <div><h3>No Show</h3></div>
+        <div id="noshow" class="noshow"></div>
+     </div>
+    </div>
+
+
+    <div id="play" class="hide"><div id="pitch" class="formation"></div></div>
+
+
+    <div id="fix" class="hide"></div>
+
+
+  </body>
+  <script type="module" src="index.js"></script>
+</html>
