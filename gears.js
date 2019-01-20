@@ -1,4 +1,5 @@
 import { listPlayers } from "./setup.js";
+import { put, get, sub } from './store.js';
 
 const pages = [];
 export function setupScreen(id) {
@@ -86,12 +87,15 @@ const save = fields => {
     const place = index > 5 ? "bench" : "pitch";
     return { name: field.value, place };
   });
-  window.localStorage.setItem("players", JSON.stringify(players));
+  put("players", players);
 };
 
-export function setupField(id = "teamName") {
-  const stored = window.localStorage.getItem(id);
-  const value = (stored)? stored : "";
+export function setupTeamName(id = "teamName") {
+  const stored = get(id);
+  const value = (stored)? stored.name : "";
+  sub(id, delta=>{
+    display.innerText = delta.new.name;
+  })
   
   const main = document.getElementById(id + "Input");
   const display = document.getElementById(id + "Display");
@@ -100,8 +104,9 @@ export function setupField(id = "teamName") {
   display.innerText = value;
 
   listen(main, e => {
-    window.localStorage.setItem(id, e.target.value);
-    display.innerText = e.target.value;
+    const name  = e.target.value;
+    put(id, { name });
+    display.innerText = name;
   });
 }
 

@@ -1,3 +1,5 @@
+import {get, put} from './store.js';
+
 export function tableSetup(id, players, benchers = []) {
   const main = document.getElementById(id);
   players.forEach((player, index) => {
@@ -7,6 +9,7 @@ export function tableSetup(id, players, benchers = []) {
     main.appendChild(button);
   });
 }
+
 
 const formClass = ["fl", "fr", "bl", "bc", "br", "g"];
 export function playerSetup(id, onPitch) {
@@ -35,14 +38,24 @@ const standardSwap = button => {
 };
 
 const store = () =>{
-  const hist = window.localStorage.getItem("history");
+  const hist = get("history");
   const history = (hist)? JSON.parse(hist): [];
   const players = listPlayers();
   history.push({date:new Date(),players});
-  window.localStorage.setItem("history", JSON.stringify(history));
+  set("history", JSON.stringify(history));
 
   const playerString = JSON.stringify(players);
-  window.localStorage.setItem("players", playerString);
+  set("players", playerString);
+}
+
+export function updateButton(updates){
+  buttonList.map(button =>{
+    const change = updates.find(update => update.old.name === button.innerText);
+    if (!change){
+      return button;
+    }
+    button.innerText = ""+change.new.name;
+  });
 }
 
 const buttonList = [];

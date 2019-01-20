@@ -1,5 +1,6 @@
-import { tableSetup, playerSetup } from "./setup.js";
-import { setupScreen, setupField, setupFields } from "./gears.js";
+import { tableSetup, playerSetup, updateButton } from "./setup.js";
+import { setupScreen, setupTeamName, setupFields } from "./gears.js";
+import { get, sub } from "./store.js";
 
 const standard = [
   { name: "Player 1", place: "pitch" },
@@ -11,19 +12,24 @@ const standard = [
   { name: "Player 7", place: "bench" },
   { name: "Player 8", place: "bench" }
 ];
-const stored = window.localStorage.getItem("players");
-const players = stored ? JSON.parse(stored) : standard;
+const storedPlayers = get("players");
+const players = storedPlayers ? storedPlayers : standard;
 
 setupScreen("setup");
 setupScreen("play");
 setupScreen("team");
 setupScreen("fix");
 setupFields("players", players.map(p => p.name));
-setupField("teamName");
+setupTeamName();
 
-const bench = players.filter(player => player.place === "bench");
-const pitch = players.filter(player => player.place === "pitch");
-const noshow = players.filter(player => player.place === "noshow");
-tableSetup("bench", players, bench);
-tableSetup("noshow", players, noshow);
-playerSetup("pitch", pitch);
+const populate = players => {
+  const bench = players.filter(player => player.place === "bench");
+  const pitch = players.filter(player => player.place === "pitch");
+  const noshow = players.filter(player => player.place === "noshow");
+  tableSetup("bench", players, bench);
+  tableSetup("noshow", players, noshow);
+  playerSetup("pitch", pitch);
+};
+
+populate(players);
+sub("players", update => updateButton(update));
