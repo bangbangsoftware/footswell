@@ -1,5 +1,5 @@
 import { listPlayers } from "./setup.js";
-import { put, get, sub } from './store.js';
+import { put, get, sub } from './persist.js';
 
 const pages = [];
 export function setupScreen(id) {

@@ -1,6 +1,6 @@
 import { tableSetup, playerSetup, updateButton } from "./setup.js";
 import { setupScreen, setupTeamName, setupFields } from "./gears.js";
-import { get, sub } from "./store.js";
+import { get, sub } from "./persist.js";
 
 const standard = [
   { name: "Player 1", place: "pitch" },
@@ -19,6 +19,7 @@ setupScreen("setup");
 setupScreen("play");
 setupScreen("team");
 setupScreen("fix");
+setupScreen("admin");
 setupFields("players", players.map(p => p.name));
 setupTeamName();
 
