@@ -1,4 +1,4 @@
-import {get, put} from './store.js';
+import {get, put} from './persist.js';
 
 export function tableSetup(id, players, benchers = []) {
   const main = document.getElementById(id);
