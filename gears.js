@@ -108,6 +108,16 @@ export function setupTeamName(id = "teamName") {
     put(id, { name });
     display.innerText = name;
   });
+
+  const display2 = document.getElementById(id + "Display2");
+
+  main.value = value;
+  display2.innerText = value;
+
+  listen(main, e => {
+    const name  = e.target.value;
+    display2.innerText = name;
+  });
 }
 
 export function setupFields(name, values = [""]) {
