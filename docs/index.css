@@ -24,8 +24,32 @@ body {
 .teamGrid {
   display: grid;
   grid-template-rows: auto auto;
+  width: 100%
 }
 
+.vrsButton {
+   font-size:100;
+  width:100%;
+  justify-self: center;
+}
+
+.vrsNameDisplay {
+ display: grid;
+ grid-template-columns: auto;
+  padding: 40px;
+}
+
+.score {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  padding: 40px;
+  
+}
+
+.result {
+  font-size: 50px;
+  font-weight: bold;
+}
 
 .field {
   height: 100px;
@@ -94,6 +118,10 @@ body {
   width: 100%;
 }
 
+.vrsNameInput {
+  font-size: 80px;
+  width: 100%;
+}
 
 .nav {
   font-size: 30px;
@@ -160,6 +188,16 @@ button {
 button:hover {
   box-shadow: 0 6px 14px 0 #666;
   transform: scale(1.05);
+}
+
+.vrsName {
+  display: grid;
+  grid-template-columns: auto auto;
+  width: 100%;
+}
+
+.vrs {
+  font-size: 100px;
 }
 
 .pageNav {

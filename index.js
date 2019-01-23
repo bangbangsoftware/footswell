@@ -22,6 +22,7 @@ setupScreen("fix");
 setupScreen("admin");
 setupFields("players", players.map(p => p.name));
 setupTeamName();
+setupTeamName("vrsName");
 
 const populate = players => {
   const bench = players.filter(player => player.place === "bench");
@@ -29,7 +30,8 @@ const populate = players => {
   const noshow = players.filter(player => player.place === "noshow");
   tableSetup("bench", players, bench);
   tableSetup("noshow", players, noshow);
-  playerSetup("pitch", pitch);
+  playerSetup("setup-pitch", pitch);
+  playerSetup("play-pitch", pitch);
 };
 
 populate(players);

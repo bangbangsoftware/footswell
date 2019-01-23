@@ -10,7 +10,7 @@
     <div id="pageNav" class="pageNav">
       <button id="adminBut" class="nav">ADMIN</button>
       <button id="setupBut" class="nav selected">SETUP</button>
-      <button id="playBut" class="nav">START</button>
+      <button id="playBut" class="nav">PLAY</button>
       <button id="teamBut" class="nav">TEAM</button>
       <button id="fixBut" class="nav">FIXTURES</button>
     </div>
@@ -26,9 +26,14 @@
 
     <div id="setup">
       <h2 id="teamNameDisplay"></h2>
+      <div class="vrsName">
+          <div class="vrs">vrs</div>
+          <input id="vrsNameInput" placeholder="Team Name" class="vrsNameInput"></input>
+      </div>
+ 
       <div class="table">
          <div><h3>On the pitch</h3></div>
-         <div id="pitch" class="formation"></div>
+         <div id="setup-pitch" class="formation"></div>
          <div><h3>On the bench</h3></div>
          <div id="bench" class="bench"></div>
          <div><h3>No Show</h3></div>
@@ -37,7 +42,18 @@
     </div>
 
 
-    <div id="play" class="hide"><div id="pitch" class="formation"></div></div>
+    <div id="play" class="hide">
+      <div class="score">
+        <div class="result" id="playTeamName">Midcrafters</div>
+        <div class="result" id="scored">100</div>
+        <div class="result" id="vrsTeamName">Calverton</div>
+        <div class="result" id="vrsScore">0</div>
+      </div>
+      <div id="play-pitch" class="formation"></div>
+      <div class="vrsNameDisplay">
+        <button class="vrsButton" id="vrsNameDisplay"></button>
+      </div>
+    </div>
 
 
     <div id="fix" class="hide"></div>
