@@ -43,11 +43,19 @@ const getDelta = (oldData, newData) => {
   }
   return newData
     .map((newer, i) => {
-      const old = oldData[i];
+      
+      const old = (oldData.length-1 < i)? null : oldData[i];
       return different(newer, old) ? { old, new: newer } : false;
     })
     .filter(there => there);
 };
+
+export function set(id, data){
+  const oldList = get(id);
+  const list = (oldList)? oldList: [];
+  list.push(data);
+  put(id,list);
+}
 
 export function put(id, newData) {
   const oldData = JSON.parse(window.localStorage.getItem(id));

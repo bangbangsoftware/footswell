@@ -12,11 +12,11 @@ export function tableSetup(id, players, benchers = []) {
 
 
 const formClass = ["fl", "fr", "bl", "bc", "br", "g"];
-export function playerSetup(id, onPitch) {
+export function playerSetup(id, onPitch, fn) {
   const main = document.getElementById(id);
   onPitch
     .map((player, index) =>
-      createButton(player.name, formClass[index], id + "--" + (index + 1))
+      createButton(player.name, formClass[index], id + "--" + (index + 1), fn)
     )
     .forEach(button => main.appendChild(button));
 }
@@ -39,13 +39,13 @@ const standardSwap = button => {
 
 const store = () =>{
   const hist = get("history");
-  const history = (hist)? JSON.parse(hist): [];
+  const history = (hist)? hist: [];
   const players = listPlayers();
   history.push({date:new Date(),players});
-  set("history", JSON.stringify(history));
+  put("history", history);
 
-  const playerString = JSON.stringify(players);
-  set("players", playerString);
+  const playerString = players;
+  put("players", playerString);
 }
 
 export function updateButton(updates){

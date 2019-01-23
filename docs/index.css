@@ -35,7 +35,7 @@ body {
 
 .vrsNameDisplay {
  display: grid;
- grid-template-columns: auto;
+ grid-template-columns: auto auto;
   padding: 40px;
 }
 
