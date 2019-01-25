@@ -51,12 +51,12 @@ let running = false;
 const start = () => {
   const timeButton = document.getElementById("startBut");
   if (running) {
-    timeButton.innerText = "Start";
+    timeButton.innerText = "START";
     clearInterval(running);
     running = false;
     return;
   }
-  timeButton.innerText = "Stop";
+  timeButton.innerText = "STOP";
   running = setInterval(increment, 1000);
 };
 
