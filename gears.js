@@ -1,5 +1,4 @@
-import { put, get, sub } from './persist.js';
-
+import { put, get, sub } from "./persist.js";
 
 export function tableSetup(id, players, benchers = []) {
   const main = document.getElementById(id);
@@ -11,14 +10,13 @@ export function tableSetup(id, players, benchers = []) {
   });
 }
 
-
 const formClass = ["fl", "fr", "bl", "bc", "br", "g"];
 export function playerSetup(id, onPitch, fn) {
   const main = document.getElementById(id);
-  const name = id.substring(id.indexOf('-')+1,id.length)+"--";
+  const name = id + "--";
   onPitch
     .map((player, index) =>
-      createButton(player.name, formClass[index], name+ (index + 1), fn)
+      createButton(player.name, formClass[index], name + (index + 1), fn)
     )
     .forEach(button => main.appendChild(button));
 }
@@ -79,19 +77,15 @@ const createButton = (
 
 export function listPlayers() {
   return buttonList
-    .filter(button => button.innerText !== "")
+    .filter(button => button.innerText !== "" && !button.id.startsWith("play"))
     .map(button => {
       const id = button.id;
-      const place = id.substring(0, id.indexOf("--"));
+      const start = button.id.startsWith("setup") ? 6 : 0;
+      const place = id.substring(start, id.indexOf("--"));
       const name = button.innerText;
       return { name, place };
     });
 }
-
-
-
-
-
 
 const pages = [];
 export function setupScreen(id) {
@@ -184,11 +178,11 @@ const save = fields => {
 
 export function setupTeamName(id = "teamName") {
   const stored = get(id);
-  const value = (stored)? stored.name : "";
-  sub(id, delta=>{
+  const value = stored ? stored.name : "";
+  sub(id, delta => {
     display.innerText = delta.new.name;
-  })
-  
+  });
+
   const main = document.getElementById(id + "Input");
   const display = document.getElementById(id + "Display");
 
@@ -196,7 +190,7 @@ export function setupTeamName(id = "teamName") {
   display.innerText = value;
 
   listen(main, e => {
-    const name  = e.target.value;
+    const name = e.target.value;
     put(id, { name });
     display.innerText = name;
   });
@@ -207,7 +201,7 @@ export function setupTeamName(id = "teamName") {
   display2.innerText = value;
 
   listen(main, e => {
-    const name  = e.target.value;
+    const name = e.target.value;
     display2.innerText = name;
   });
 }
