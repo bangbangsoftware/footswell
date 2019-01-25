@@ -21,20 +21,21 @@ export function playerSetup(id, onPitch, fn) {
     .forEach(button => main.appendChild(button));
 }
 
-const selected = { last: new Date(), button: null, first: false };
+const selected = { last: new Date(), button: [], first: false };
 
 const standardSwap = button => {
   if (selected.first) {
-    const text = button.innerText;
-    button.innerText = "" + selected.button.innerText;
-    selected.button.innerText = "" + text;
-    selected.button.classList.remove("selected");
+    const text = ""+ button.innerText;
+    const oldBut = selected.button.pop();
+    button.innerText = "" + oldBut.innerText;
+    oldBut.innerText = "" + text;
+    oldBut.classList.remove("selected");
     store();
   } else {
     button.classList.add("selected");
   }
   selected.first = !selected.first;
-  selected.button = button;
+  selected.button.push(button);
 };
 
 const store = () => {
