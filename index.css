@@ -17,33 +17,59 @@ h3 {
 }
 
 body {
-  background-color:#b5ad9a;
+  background-color: #b5ad9a;
   color: rgb(17, 14, 6);
 }
 
 .teamGrid {
   display: grid;
   grid-template-rows: auto auto;
-  width: 100%
+  width: 100%;
 }
 
 .vrsButton {
-   font-size:100;
-  width:100%;
+  font-size: 100;
+  width: 100%;
   justify-self: center;
 }
 
 .vrsNameDisplay {
- display: grid;
- grid-template-columns: auto auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   padding: 40px;
+}
+
+.timer {
+  display: grid;
+  grid-template-columns: 7fr 1fr 0fr 0fr 2fr 7fr;
+}
+
+
+.startBut {
+  font-size: 30px;
+  width: 100%;
+}
+
+.mins {
+  font-size: 40px;
+  justify-self: flex-end;
+}
+
+.secs {
+  font-size: 40px;
+}
+
+.goal {
+  color: red;
+  font-size: 300%;
+  text-align: center;
+  font-weight: bold;
 }
 
 .score {
   display: grid;
   grid-template-columns: auto auto auto auto;
-  padding: 40px;
-  
+  padding: 10px;
 }
 
 .result {
@@ -170,7 +196,7 @@ button {
   box-shadow: 0 6px 10px 0 #666;
   transition: all 0.1s ease-in-out;
 
-  color:#b3ac9e;
+  color: #b3ac9e;
   text-align: center;
   width: 130px;
 }
@@ -180,7 +206,7 @@ button {
 }
 
 .selected {
-  border-color: rosybrown; 
+  border-color: rosybrown;
   border: 10px;
   background-color: #481717;
 }
