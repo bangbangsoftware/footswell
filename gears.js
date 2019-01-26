@@ -122,16 +122,18 @@ const createAddBut = (holder, name, id, row, take) => {
   const button = document.createElement("button");
   button.innerText = "+";
   button.classList.add("fieldBut");
-  button.onclick = () => {
-    adder(holder, name, id, row, take);
-  };
+  const adfunc = adder(holder, name, id, button, row, take);
+  button.onclick = () => adfunc();
   return button;
 };
 
-const adder = (holder, name, id, add, row, take) => {
+const adder = (holder, name, id, add, row, take) => () => {
   add.classList.add("hide");
   row.appendChild(take);
-  createField(holder, name, "", id + 1);
+  const field = createField(holder, name, "", id + 1);
+  fields.push(field);
+  listen(field, e => save(fields));
+ 
 };
 
 const createField = (holder, name, value, id, more = true) => {
@@ -160,11 +162,11 @@ const createField = (holder, name, value, id, more = true) => {
 const listen = (field, fn) => {
   const changed = e => fn(e);
   field.addEventListener("change", e => changed(e));
-  field.addEventListener("keypress", e => {
-    if (event.which == 13 || event.keyCode == 13) {
-      adder(holder, name, id, row, takeBut);
-    }
-  });
+//  field.addEventListener("keypress", e => {
+//    if (event.which == 13 || event.keyCode == 13) {
+//      adder(holder, name, id, row, takeBut);
+//    }
+//  });
   field.addEventListener("onpaste", e => changed(e));
   field.addEventListener("oninput", e => changed(e));
 };
@@ -207,11 +209,13 @@ export function setupTeamName(id = "teamName") {
   });
 }
 
+let fields = [];
+
 export function setupFields(name, values = [""]) {
   const main = document.getElementById(name);
   const holder = document.createElement("div");
   holder.classList.add("fieldGrid");
-  const fields = values.map((value, i) => {
+  fields = values.map((value, i) => {
     const field = createField(holder, name, value, i, i + 1 !== values.length);
     listen(field, e => save(fields));
     return field;

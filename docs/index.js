@@ -14,7 +14,8 @@ const standard = [
   { name: "Player 5", place: "pitch" },
   { name: "Player 6", place: "pitch" },
   { name: "Player 7", place: "bench" },
-  { name: "Player 8", place: "bench" }
+  { name: "Player 8", place: "bench" },
+  { name: "Player 9", place: "bench" }
 ];
 const storedPlayers = get("players");
 const players = storedPlayers ? storedPlayers : standard;
