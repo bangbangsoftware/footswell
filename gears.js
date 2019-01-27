@@ -18,7 +18,7 @@ const fixPlayer = onPitch => {
     }
     player.position = formClass[index];
     return player;
-  });
+  }).filter(player => player.name.trim().length > 0);
 };
 
 const formClass = ["fl", "fr", "bl", "bc", "br", "g"];
