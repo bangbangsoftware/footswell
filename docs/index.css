@@ -43,6 +43,7 @@ body {
 .teamGrid {
   display: grid;
   grid-template-rows: auto auto;
+  grid-template-columns: 88%;
   width: 100%;
 }
 
@@ -112,6 +113,7 @@ body {
 
 .fieldGrid {
   display: grid;
+  margin: 10px;
 }
 
 .formation {
@@ -180,8 +182,8 @@ body {
 }
 
 .teamNameInput {
-  font-size: 120px;
-  width: 100%;
+  font-size: 97px;
+  margin: 10px;
 }
 
 .vrsNameInput {
