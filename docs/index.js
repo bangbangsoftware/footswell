@@ -7,12 +7,12 @@ import { get } from "./persist.js";
 import { setupPlay } from "./play.js";
 
 const standard = [
-  { name: "Player 1", place: "pitch" },
-  { name: "Player 2", place: "pitch" },
-  { name: "Player 3", place: "pitch" },
-  { name: "Player 4", place: "pitch" },
-  { name: "Player 5", place: "pitch" },
-  { name: "Player 6", place: "pitch" },
+  { name: "Player 1", place: "pitch", position: "fr" },
+  { name: "Player 2", place: "pitch", position: "fl"  },
+  { name: "Player 3", place: "pitch", position: "bl"  },
+  { name: "Player 4", place: "pitch", position: "bc"  },
+  { name: "Player 5", place: "pitch", position: "br"  },
+  { name: "Player 6", place: "pitch", position: "g"  },
   { name: "Player 7", place: "bench" },
   { name: "Player 8", place: "bench" },
   { name: "Player 9", place: "bench" },

@@ -1,59 +1,76 @@
-import { put, get, sub } from './persist.js';
+import { put, get, sub } from "./persist.js";
 
-export function tableSetup(id, players, benchers = []) {
+export function tableSetup(id, names = []) {
   const main = document.getElementById(id);
-  players.forEach((player, index) => {
-    const innerText = index + 1 > benchers.length ? '' : benchers[index].name;
-    const className = 'name';
+  [1, 2, 3, 4].forEach(index => {
+    const innerText = index > names.length ? "\t" : names[index - 1].name;
+    const className = "name";
     const button = createButton(innerText, className, `${id}--${index + 1}`);
     main.appendChild(button);
   });
 }
 
-const formClass = ['fl', 'fr', 'bl', 'bc', 'br', 'g'];
-export function playerSetup(id, onPitch, fn) {
+const fixPlayer = onPitch => {
+  return onPitch.map((player, index) => {
+    if (player.position) {
+      return player;
+
+    }
+    player.position = formClass[index];
+    return player;
+  });
+};
+
+const formClass = ["fl", "fr", "bl", "bc", "br", "g"];
+export function playerSetup(id, players, fn) {
+  const onPitch = fixPlayer(players);
   const main = document.getElementById(id);
   const name = `${id}--`;
-  onPitch
-    .map((player, index) => createButton(player.name, formClass[index], name + (index + 1), fn))
+  formClass
+    .map(cls => {
+      const player = onPitch.find(p => p.position === cls);
+      if (player) {
+        return createButton(player.name, cls, name + cls, fn);
+      }
+    })
     .forEach(button => main.appendChild(button));
 }
 
 const selected = { last: new Date(), button: [], first: false };
 
-const standardSwap = (button) => {
+const standardSwap = button => {
   if (selected.first) {
     const text = `${button.innerText}`;
     const oldBut = selected.button.pop();
     button.innerText = `${oldBut.innerText}`;
     oldBut.innerText = `${text}`;
-    oldBut.classList.remove('selected');
+    oldBut.classList.remove("selected");
     store();
   } else {
-    button.classList.add('selected');
+    button.classList.add("selected");
   }
   selected.first = !selected.first;
   selected.button.push(button);
 };
 
 const store = () => {
-  const hist = get('history');
+  const hist = get("history");
   const history = hist || [];
   const players = listPlayers();
   history.push({ date: new Date(), players });
-  put('history', history);
+  put("history", history);
 
   const playerString = players;
-  put('players', playerString);
+  put("players", playerString);
 };
 
 export function updateButton(updates) {
-  buttonList.map((button) => {
-    const change = updates.find(update => update.old.name === button.innerText);
+  buttonList.map(button => {
+    const change = updates.find(update => update.name === button.innerText);
     if (!change) {
       return button;
     }
-    button.innerText = `${change.new.name}`;
+    button.innerText = `${change.name}`;
   });
 }
 
@@ -63,26 +80,27 @@ const createButton = (
   text,
   classname,
   id,
-  fn = button => standardSwap(button),
+  fn = button => standardSwap(button)
 ) => {
-  const button = document.createElement('button');
+  const button = document.createElement("button");
   button.id = id;
   button.classList = [classname];
   button.innerText = text;
-  button.addEventListener('click', () => fn(button));
+  button.addEventListener("click", () => fn(button));
   buttonList.push(button);
   return button;
 };
 
 export function listPlayers() {
   return buttonList
-    .filter(button => button.innerText !== '' && !button.id.startsWith('play'))
-    .map((button) => {
+    .filter(button => button.innerText !== "" && !button.id.startsWith("play"))
+    .map(button => {
       const id = button.id;
-      const start = button.id.startsWith('setup') ? 6 : 0;
-      const place = id.substring(start, id.indexOf('--'));
+      const start = button.id.startsWith("setup") ? 6 : 0;
+      const place = id.substring(start, id.indexOf("--"));
+      const position = button.classList[0];
       const name = button.innerText;
-      return { name, place };
+      return { name, place, position };
     });
 }
 
@@ -90,56 +108,56 @@ const pages = [];
 export function setupScreen(id) {
   const screen = document.getElementById(id);
   const button = document.getElementById(`${id}But`);
-  button.addEventListener('click', () => {
+  button.addEventListener("click", () => {
     console.log(listPlayers());
-    const hidden = screen.classList.contains('hide');
-    pages.forEach((page) => {
-      page.screen.classList.add('hide');
-      page.button.classList.remove('selected');
+    const hidden = screen.classList.contains("hide");
+    pages.forEach(page => {
+      page.screen.classList.add("hide");
+      page.button.classList.remove("selected");
     });
     if (hidden) {
-      screen.classList.remove('hide');
-      button.classList.add('selected');
+      screen.classList.remove("hide");
+      button.classList.add("selected");
     }
   });
   const page = { screen, button };
   pages.push(page);
 }
 
-const createTakeBut = (field) => {
-  const button = document.createElement('button');
-  button.innerText = '-';
-  button.classList.add('fieldBut');
+const createTakeBut = field => {
+  const button = document.createElement("button");
+  button.innerText = "-";
+  button.classList.add("fieldBut");
   button.onclick = () => {
-    field.value = '';
+    field.value = "";
   };
   return button;
 };
 
 const createAddBut = (holder, name, id, row, take) => {
-  const button = document.createElement('button');
-  button.innerText = '+';
-  button.classList.add('fieldBut');
+  const button = document.createElement("button");
+  button.innerText = "+";
+  button.classList.add("fieldBut");
   const adfunc = adder(holder, name, id, button, row, take);
   button.onclick = () => adfunc();
   return button;
 };
 
 const adder = (holder, name, id, add, row, take) => () => {
-  add.classList.add('hide');
+  add.classList.add("hide");
   row.appendChild(take);
-  const field = createField(holder, name, '', id + 1);
+  const field = createField(holder, name, "", id + 1);
   fields.push(field);
-  listen(field, e => save(fields));
+  listen(field, () => save(fields));
 };
 
 const createField = (holder, name, value, id, more = true) => {
-  const row = document.createElement('div');
+  const row = document.createElement("div");
 
-  const field = document.createElement('input');
+  const field = document.createElement("input");
   field.value = value;
   field.id = `${name}--${id}`;
-  field.classList.add('field');
+  field.classList.add("field");
   field.focus();
 
   const takeBut = createTakeBut(field);
@@ -151,35 +169,35 @@ const createField = (holder, name, value, id, more = true) => {
   } else {
     row.appendChild(addBut);
   }
-  row.classList.add('fieldRow');
+  row.classList.add("fieldRow");
   holder.appendChild(row);
   return field;
 };
 
 const listen = (field, fn) => {
   const changed = e => fn(e);
-  field.addEventListener('change', e => changed(e));
+  field.addEventListener("change", e => changed(e));
   //  field.addEventListener("keypress", e => {
   //    if (event.which == 13 || event.keyCode == 13) {
   //      adder(holder, name, id, row, takeBut);
   //    }
   //  });
-  field.addEventListener('onpaste', e => changed(e));
-  field.addEventListener('oninput', e => changed(e));
+  field.addEventListener("onpaste", e => changed(e));
+  field.addEventListener("oninput", e => changed(e));
 };
 
-const save = (fields) => {
+const save = fields => {
   const players = fields.map((field, index) => {
-    const place = index > 5 ? 'bench' : 'pitch';
+    const place = index > 5 ? "bench" : "pitch";
     return { name: field.value, place };
   });
-  put('players', players);
+  put("players", players);
 };
 
-export function setupTeamName(id = 'teamName') {
+export function setupTeamName(id = "teamName") {
   const stored = get(id);
-  const value = stored ? stored.name : '';
-  sub(id, (delta) => {
+  const value = stored ? stored.name : "";
+  sub(id, delta => {
     display.innerText = delta.new.name;
   });
 
@@ -189,7 +207,7 @@ export function setupTeamName(id = 'teamName') {
   main.value = value;
   display.innerText = value;
 
-  listen(main, (e) => {
+  listen(main, e => {
     const name = e.target.value;
     put(id, { name });
     display.innerText = name;
@@ -200,7 +218,7 @@ export function setupTeamName(id = 'teamName') {
   main.value = value;
   display2.innerText = value;
 
-  listen(main, (e) => {
+  listen(main, e => {
     const name = e.target.value;
     display2.innerText = name;
   });
@@ -208,13 +226,13 @@ export function setupTeamName(id = 'teamName') {
 
 let fields = [];
 
-export function setupFields(name, values = ['']) {
+export function setupFields(name, values = [""]) {
   const main = document.getElementById(name);
-  const holder = document.createElement('div');
-  holder.classList.add('fieldGrid');
+  const holder = document.createElement("div");
+  holder.classList.add("fieldGrid");
   fields = values.map((value, i) => {
     const field = createField(holder, name, value, i, i + 1 !== values.length);
-    listen(field, e => save(fields));
+    listen(field, () => save(fields));
     return field;
   });
   main.appendChild(holder);
