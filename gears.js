@@ -1,23 +1,38 @@
 import { put, get, sub } from "./persist.js";
 
-export function tableSetup(id, players, benchers = []) {
+export function tableSetup(id, names = []) {
   const main = document.getElementById(id);
-  players.forEach((player, index) => {
-    const innerText = index + 1 > benchers.length ? "" : benchers[index].name;
+  [1, 2, 3, 4].forEach(index => {
+    const innerText = index > names.length ? "\t" : names[index - 1].name;
     const className = "name";
-    const button = createButton(innerText, className, id + "--" + (index + 1));
+    const button = createButton(innerText, className, `${id}--${index + 1}`);
     main.appendChild(button);
   });
 }
 
+const fixPlayer = onPitch => {
+  return onPitch.map((player, index) => {
+    if (player.position) {
+      return player;
+
+    }
+    player.position = formClass[index];
+    return player;
+  });
+};
+
 const formClass = ["fl", "fr", "bl", "bc", "br", "g"];
-export function playerSetup(id, onPitch, fn) {
+export function playerSetup(id, players, fn) {
+  const onPitch = fixPlayer(players);
   const main = document.getElementById(id);
-  const name = id + "--";
-  onPitch
-    .map((player, index) =>
-      createButton(player.name, formClass[index], name + (index + 1), fn)
-    )
+  const name = `${id}--`;
+  formClass
+    .map(cls => {
+      const player = onPitch.find(p => p.position === cls);
+      if (player) {
+        return createButton(player.name, cls, name + cls, fn);
+      }
+    })
     .forEach(button => main.appendChild(button));
 }
 
@@ -25,10 +40,10 @@ const selected = { last: new Date(), button: [], first: false };
 
 const standardSwap = button => {
   if (selected.first) {
-    const text = ""+ button.innerText;
+    const text = `${button.innerText}`;
     const oldBut = selected.button.pop();
-    button.innerText = "" + oldBut.innerText;
-    oldBut.innerText = "" + text;
+    button.innerText = `${oldBut.innerText}`;
+    oldBut.innerText = `${text}`;
     oldBut.classList.remove("selected");
     store();
   } else {
@@ -40,7 +55,7 @@ const standardSwap = button => {
 
 const store = () => {
   const hist = get("history");
-  const history = hist ? hist : [];
+  const history = hist || [];
   const players = listPlayers();
   history.push({ date: new Date(), players });
   put("history", history);
@@ -51,11 +66,11 @@ const store = () => {
 
 export function updateButton(updates) {
   buttonList.map(button => {
-    const change = updates.find(update => update.old.name === button.innerText);
+    const change = updates.find(update => update.name === button.innerText);
     if (!change) {
       return button;
     }
-    button.innerText = "" + change.new.name;
+    button.innerText = `${change.name}`;
   });
 }
 
@@ -83,15 +98,16 @@ export function listPlayers() {
       const id = button.id;
       const start = button.id.startsWith("setup") ? 6 : 0;
       const place = id.substring(start, id.indexOf("--"));
+      const position = button.classList[0];
       const name = button.innerText;
-      return { name, place };
+      return { name, place, position };
     });
 }
 
 const pages = [];
 export function setupScreen(id) {
   const screen = document.getElementById(id);
-  const button = document.getElementById(id + "But");
+  const button = document.getElementById(`${id}But`);
   button.addEventListener("click", () => {
     console.log(listPlayers());
     const hidden = screen.classList.contains("hide");
@@ -132,8 +148,7 @@ const adder = (holder, name, id, add, row, take) => () => {
   row.appendChild(take);
   const field = createField(holder, name, "", id + 1);
   fields.push(field);
-  listen(field, e => save(fields));
- 
+  listen(field, () => save(fields));
 };
 
 const createField = (holder, name, value, id, more = true) => {
@@ -141,7 +156,7 @@ const createField = (holder, name, value, id, more = true) => {
 
   const field = document.createElement("input");
   field.value = value;
-  field.id = name + "--" + id;
+  field.id = `${name}--${id}`;
   field.classList.add("field");
   field.focus();
 
@@ -162,11 +177,11 @@ const createField = (holder, name, value, id, more = true) => {
 const listen = (field, fn) => {
   const changed = e => fn(e);
   field.addEventListener("change", e => changed(e));
-//  field.addEventListener("keypress", e => {
-//    if (event.which == 13 || event.keyCode == 13) {
-//      adder(holder, name, id, row, takeBut);
-//    }
-//  });
+  //  field.addEventListener("keypress", e => {
+  //    if (event.which == 13 || event.keyCode == 13) {
+  //      adder(holder, name, id, row, takeBut);
+  //    }
+  //  });
   field.addEventListener("onpaste", e => changed(e));
   field.addEventListener("oninput", e => changed(e));
 };
@@ -186,8 +201,8 @@ export function setupTeamName(id = "teamName") {
     display.innerText = delta.new.name;
   });
 
-  const main = document.getElementById(id + "Input");
-  const display = document.getElementById(id + "Display");
+  const main = document.getElementById(`${id}Input`);
+  const display = document.getElementById(`${id}Display`);
 
   main.value = value;
   display.innerText = value;
@@ -198,7 +213,7 @@ export function setupTeamName(id = "teamName") {
     display.innerText = name;
   });
 
-  const display2 = document.getElementById(id + "Display2");
+  const display2 = document.getElementById(`${id}Display2`);
 
   main.value = value;
   display2.innerText = value;
@@ -217,7 +232,7 @@ export function setupFields(name, values = [""]) {
   holder.classList.add("fieldGrid");
   fields = values.map((value, i) => {
     const field = createField(holder, name, value, i, i + 1 !== values.length);
-    listen(field, e => save(fields));
+    listen(field, () => save(fields));
     return field;
   });
   main.appendChild(holder);

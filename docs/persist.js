@@ -43,18 +43,17 @@ const getDelta = (oldData, newData) => {
   }
   return newData
     .map((newer, i) => {
-      
-      const old = (oldData.length-1 < i)? null : oldData[i];
+      const old = (oldData.length - 1 < i) ? null : oldData[i];
       return different(newer, old) ? { old, new: newer } : false;
     })
     .filter(there => there);
 };
 
-export function set(id, data){
+export function set(id, data) {
   const oldList = get(id);
-  const list = (oldList)? oldList: [];
+  const list = (oldList) || [];
   list.push(data);
-  put(id,list);
+  put(id, list);
 }
 
 export function put(id, newData) {

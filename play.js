@@ -1,5 +1,6 @@
 import { set } from "./persist.js";
 import { setupScreen, playerSetup } from "./gears.js";
+import { kickoff } from "./events.js";
 
 export function setupPlay(pitch) {
   setupScreen("play");
@@ -8,18 +9,15 @@ export function setupPlay(pitch) {
   setupAction();
 }
 
-const playPitchSetup = pitch => {
-  playerSetup("play-pitch", pitch, but => {
+const playPitchSetup = (pitch) => {
+  playerSetup("play-pitch", pitch, (but) => {
     const player = but.innerText;
     const date = new Date();
-    console.log(
-      date + "%c" + player + " scored!!",
-      "font-size:300%; color:red"
-    );
+    console.log(`${date}%c${player} scored!!`,"font-size:300%; color:red");
     const goal = document.getElementById("goal");
     const timer = document.getElementById("timer");
     timer.classList.add("hide");
-    goal.innerText = "!!! " + player + " scored !!!";
+    goal.innerText = `!!! ${player} scored !!!`;
     goal.classList.remove("hide");
     goal.classList.add("goal");
     setTimeout(() => {
@@ -56,6 +54,9 @@ const start = () => {
     running = false;
     return;
   }
+  if (timeButton.innerText === "KICK OFF"){
+    kickoff();
+  }
   timeButton.innerText = "STOP";
   running = setInterval(increment, 1000);
 };
@@ -71,16 +72,13 @@ const increment = () => {
     return;
   }
 
-  seconds.innerText = secs < 10 ? "0" + secs : secs;
+  seconds.innerText = secs < 10 ? `0${secs}` : secs;
 };
 
 const goalTaken = (teamName, scoreID) => {
   const name = teamName.innerText;
   const date = new Date();
-  console.log(
-    date + "%c " + name + " taken goal away",
-    "font-size:100%; color:gray"
-  );
+  console.log(`${date}%c ${name} taken goal away`,"font-size:100%; color:gray");
   const scoreValue = document.getElementById(scoreID);
   const adjustedScore = parseInt(scoreValue.innerText) - 1;
   const score = adjustedScore < 0 ? 0 : adjustedScore;
@@ -98,7 +96,7 @@ const setupAction = () => {
   otherScore.addEventListener("click", () => {
     const player = otherScore.innerText;
     const date = new Date();
-    console.log(date + "%c" + name + " scored", "font-size:100%; color:gray");
+    console.log(`${date}%c${name} scored`, "font-size:100%; color:gray");
     const against = document.getElementById("vrsScored");
     const score = parseInt(against.innerText) + 1;
     against.innerText = score;

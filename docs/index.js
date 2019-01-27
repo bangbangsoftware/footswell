@@ -1,8 +1,8 @@
 import { setupTeamName } from "./gears.js";
-import { setupSetup} from './setup.js';
-import { setupTeam} from './team.js';
-import { setupFix} from './fix.js';
-import { setupAdmin} from './admin.js';
+import { setupSetup } from "./setup.js";
+import { setupTeam } from "./team.js";
+import { setupFix } from "./fix.js";
+import { setupAdmin } from "./admin.js";
 import { get } from "./persist.js";
 import { setupPlay } from "./play.js";
 
@@ -15,10 +15,10 @@ const standard = [
   { name: "Player 6", place: "pitch" },
   { name: "Player 7", place: "bench" },
   { name: "Player 8", place: "bench" },
-  { name: "Player 9", place: "bench" }
+  { name: "Player 9", place: "bench" },
 ];
 const storedPlayers = get("players");
-const players = storedPlayers ? storedPlayers : standard;
+const players = storedPlayers || standard;
 const pitch = players.filter(player => player.place === "pitch");
 
 setupAdmin();
