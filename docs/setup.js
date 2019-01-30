@@ -23,10 +23,10 @@ export function setupSetup(players) {
   const homeButt = document.getElementById("home");
   const awayButt = document.getElementById("away");
   let home = true;
-  homeButt.addEventListener("click", () =>
-    home = toggleHome(home, awayButt, homeButt)
-  );
-  awayButt.addEventListener("click", () =>
-    home = toggleHome(home, awayButt, homeButt)
-  );
+  const setHome = () => {
+    home = toggleHome(home, awayButt, homeButt);
+    window.localStorage.setItem("home", "" + home);
+  };
+  homeButt.addEventListener("click", setHome);
+  awayButt.addEventListener("click", setHome);
 }

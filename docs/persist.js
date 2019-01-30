@@ -75,7 +75,7 @@ const getDelta = (oldData, newData) => {
   }
   return newData
     .map((newer, i) => {
-      const old = oldData.length - 1 < i ? null : oldData[i];
+      const old = (!oldData || oldData.length - 1 < i) ? null : oldData[i];
       return different(newer, old) ? { old, new: newer } : false;
     })
     .filter(there => there);

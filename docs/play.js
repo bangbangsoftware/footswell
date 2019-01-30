@@ -1,6 +1,5 @@
-import { set } from "./persist.js";
 import { setupScreen, playerSetup } from "./gears.js";
-import { kickoff } from "./events.js";
+import { kickoff, paused, restart, goal } from "./events.js";
 
 export function setupPlay(pitch) {
   setupScreen("play");
@@ -9,27 +8,26 @@ export function setupPlay(pitch) {
   setupAction();
 }
 
-const playPitchSetup = (pitch) => {
-  playerSetup("play-pitch", pitch, (but) => {
+const playPitchSetup = pitch => {
+  playerSetup("play-pitch", pitch, but => {
     const player = but.innerText;
     const date = new Date();
-    console.log(`${date}%c${player} scored!!`,"font-size:300%; color:red");
-    const goal = document.getElementById("goal");
+    console.log(`${date}%c${player} scored!!`, "font-size:300%; color:red");
+    const goalElement = document.getElementById("goal");
     const timer = document.getElementById("timer");
     timer.classList.add("hide");
-    goal.innerText = `!!! ${player} scored !!!`;
-    goal.classList.remove("hide");
-    goal.classList.add("goal");
+    goalElement.innerText = `!!! ${player} scored !!!`;
+    goalElement.classList.remove("hide");
+    goalElement.classList.add("goal");
     setTimeout(() => {
-      goal.classList.remove("goal");
-      goal.classList.add("hide");
+      goalElement.classList.remove("goal");
+      goalElement.classList.add("hide");
       timer.classList.remove("hide");
     }, 5000);
     const goals = document.getElementById("scored");
     const score = parseInt(goals.innerText) + 1;
     goals.innerText = score;
-    const result = { date, player, score };
-    set("score", result);
+    goal(player);
   });
 };
 
@@ -52,13 +50,15 @@ const start = () => {
     timeButton.innerText = "START";
     clearInterval(running);
     running = false;
+    paused();
     return;
   }
-  if (timeButton.innerText === "KICK OFF"){
+  if (timeButton.innerText === "KICK OFF") {
     kickoff();
   }
-  timeButton.innerText = "STOP";
+  timeButton.innerText = "PAUSE";
   running = setInterval(increment, 1000);
+  restart();
 };
 
 const increment = () => {
@@ -71,20 +71,21 @@ const increment = () => {
     minutes.innerText = mins;
     return;
   }
-
   seconds.innerText = secs < 10 ? `0${secs}` : secs;
 };
 
 const goalTaken = (teamName, scoreID) => {
   const name = teamName.innerText;
   const date = new Date();
-  console.log(`${date}%c ${name} taken goal away`,"font-size:100%; color:gray");
+  console.log(
+    `${date}%c ${name} taken goal away`,
+    "font-size:100%; color:gray"
+  );
   const scoreValue = document.getElementById(scoreID);
   const adjustedScore = parseInt(scoreValue.innerText) - 1;
   const score = adjustedScore < 0 ? 0 : adjustedScore;
   scoreValue.innerText = score;
-  const goal = { date, name, score };
-  set("score", goal);
+  goal(name);
 };
 
 const setupAction = () => {
@@ -100,7 +101,6 @@ const setupAction = () => {
     const against = document.getElementById("vrsScored");
     const score = parseInt(against.innerText) + 1;
     against.innerText = score;
-    const goal = { date, player, score };
-    set("score", goal);
+    goal(player);
   });
 };
