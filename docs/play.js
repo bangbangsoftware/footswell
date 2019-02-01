@@ -1,5 +1,5 @@
 import { setupScreen, playerSetup } from "./gears.js";
-import { kickoff, paused, restart, goal } from "./events.js";
+import { kickoff, paused, restart, goal, final, badGoal } from "./events.js";
 
 export function setupPlay(pitch) {
   setupScreen("play");
@@ -55,6 +55,11 @@ const start = () => {
   }
   if (timeButton.innerText === "KICK OFF") {
     kickoff();
+    const div = document.getElementById("bot-but");
+    const fin = document.createElement("button");
+    fin.innerText = "Final Whistle";
+    fin.addEventListener("click", () => final());
+    div.appendChild(fin);
   }
   timeButton.innerText = "PAUSE";
   running = setInterval(increment, 1000);
@@ -85,7 +90,7 @@ const goalTaken = (teamName, scoreID) => {
   const adjustedScore = parseInt(scoreValue.innerText) - 1;
   const score = adjustedScore < 0 ? 0 : adjustedScore;
   scoreValue.innerText = score;
-  goal(name);
+  badGoal(name);
 };
 
 const setupAction = () => {

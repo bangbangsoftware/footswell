@@ -225,7 +225,6 @@ export function setupTeamName(id = "teamName") {
 }
 
 let fields = [];
-
 export function setupFields(name, values = [""]) {
   const main = document.getElementById(name);
   const holder = document.createElement("div");

@@ -10,7 +10,7 @@ export function sub(id, fn) {
   return remove(index);
 }
 const keys = [];
-const addKey = (id) => {
+const addKey = id => {
   if (keys.indexOf(id) > -1) {
     return;
   }
@@ -18,7 +18,7 @@ const addKey = (id) => {
 };
 
 export function reset() {
-  const results = keys.map((id) => {
+  const results = keys.map(id => {
     const obj = get(id);
     window.localStorage.removeItem(id);
     return { id, obj };
@@ -31,7 +31,7 @@ export function importData(dataList) {
 }
 
 export function getAll() {
-  const results = keys.map((id) => {
+  const results = keys.map(id => {
     const obj = get(id);
     return { id, obj };
   });
@@ -75,7 +75,7 @@ const getDelta = (oldData, newData) => {
   }
   return newData
     .map((newer, i) => {
-      const old = (!oldData || oldData.length - 1 < i) ? null : oldData[i];
+      const old = !oldData || oldData.length - 1 < i ? null : oldData[i];
       return different(newer, old) ? { old, new: newer } : false;
     })
     .filter(there => there);
@@ -86,6 +86,10 @@ export function set(id, data) {
   const list = oldList || [];
   list.push(data);
   put(id, list);
+}
+
+export function del(id) {
+  window.localStorage.removeItem(id);
 }
 
 export function put(id, newData) {
