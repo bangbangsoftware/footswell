@@ -56,9 +56,16 @@ const start = () => {
   if (timeButton.innerText === "KICK OFF") {
     kickoff();
     const div = document.getElementById("bot-but");
-    const fin = document.createElement("button");
-    fin.innerText = "Final Whistle";
-    fin.addEventListener("click", () => final());
+    document.getElementById("vrsNameDisplay").classList.remove("hide");
+	const fin = document.getElementById("final");
+	fin.classList.remove("hide");
+    fin.addEventListener("click", () => {
+      document.getElementById("vrsNameDisplay").classList.add("hide");
+      document.getElementById("bot-but").classList.add("hide");
+      clearInterval(running);
+      running = false;
+      final();
+    });
     div.appendChild(fin);
   }
   timeButton.innerText = "PAUSE";

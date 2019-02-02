@@ -14,11 +14,14 @@
     </div>
 
     <div id="admin" class="hide">
-      <button class="reset" id="reset">Reset data</button>
-      <button class="reset" id="export">Export data</button>
-      <span class="hiddenFileInput">
-        <input class="reset" id="upload" type="file" name="theFile"/>
-      </span>
+      <div class="top-grid">
+        <button class="reset" id="reset">Reset data</button>
+        <button class="reset" id="export">Export data</button>
+        <span class="hiddenFileInput">
+          <input class="file-but" id="upload" type="file" name="theFile"/>
+        </span>
+      </div>
+      <div id="games"></div>
     </div>
 
 
@@ -50,7 +53,7 @@
     </div>
 
 
-    <div id="play" class="hide">
+    <div id="play" class="play hide">
      <div id="goal" class="hide"></div>
      <div id="timer" class="timer">
      <div></div>
@@ -66,9 +69,10 @@
         <div class="result" id="vrsScored">0</div>
       </div>
       <div id="play-pitch" class="formation"></div>
+      <button class="startBut" id="startBut">KICK OFF</button>
       <div id="bot-but" class="vrsNameDisplay">
-        <button class="startBut" id="startBut">KICK OFF</button>
-        <button class="vrsButton" id="vrsNameDisplay"></button>
+          <button class="vrsButton hide" id="vrsNameDisplay"></button>
+          <button class="vrsButton hide" id="final">Final Whistle</button>
       </div>
     </div>
 

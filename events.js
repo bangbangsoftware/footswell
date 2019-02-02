@@ -40,6 +40,7 @@ export function final() {
   const scored = document.getElementById("scored").innerText;
   const otherScored = document.getElementById("vrsScored").innerText;
   const evnt =
+    "\n" +
     time +
     ",Final Whistle," +
     teamName +
@@ -54,13 +55,12 @@ export function final() {
 }
 
 const options = {
-  weekday: "short",
   year: "numeric",
   month: "long",
   day: "numeric"
 };
 const heading =
-  "Time,Event,Front Left,Front Right,Left Back,Left Center,Back Right, Back Left, Goal";
+  "Time,Event, Front Left, Front Right, Left Back, Center Back, Right Back, Goal";
 const blanker = ",,,,,,,";
 
 export function kickoff() {
@@ -72,17 +72,18 @@ export function kickoff() {
   const dateString = new Intl.DateTimeFormat("en-GB", options).format(when);
 
   const title =
-    "Southwell City Under 8’s " +
+    "Southwell City, Under 8’s " +
     home +
-    " game: " +
+    ", game: ," +
     name +
-    " vrs " +
+    ", vrs ," +
     vrsName +
-    " on " +
+    ", on ," +
     dateString +
-    ",,,,,,,";
+    "";
 
   put("current", dateString);
+  set("games", dateString);
   set(dateString, title);
   set(dateString, blanker);
   set(dateString, heading);
