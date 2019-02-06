@@ -141,6 +141,7 @@ body {
 .fieldRow {
   display: grid;
   grid-template-columns: 77% 5%;
+  width: 80%;
 }
 
 .fieldGrid {
