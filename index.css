@@ -131,7 +131,7 @@ body {
 
 .field {
   height: 100px;
-  font-size: 100px;
+  font-size: 60px;
 }
 
 .header {
@@ -195,6 +195,13 @@ body {
   font-weight: bold;
 }
 
+.team-top {
+  display: grid;
+  padding: 10px;
+  grid-template-rows: auto auto;
+}
+
+
 .topbar {
   display: grid;
   padding: 10px;
@@ -228,7 +235,7 @@ body {
 }
 
 .name {
-  font-size: 20px;
+  font-size: 60px;
 }
 
 .fieldBut {
@@ -240,7 +247,7 @@ body {
 }
 
 .teamNameInput {
-  font-size: 97px;
+  font-size: 60px;
   margin: 10px;
   font-family: 'FjallaOne-Regular';
 }
