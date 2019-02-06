@@ -188,8 +188,7 @@ body {
 
 .game-section {
   font-family: 'FjallaOne-Regular';
-  padding-left: 100px;
-  padding-right: 100px;
+  padding: 100px;
   text-align: center;
   font-size: 30px;
   font-weight: bold;
