@@ -4,7 +4,7 @@ export function tableSetup(id, names = []) {
   const main = document.getElementById(id);
   [1, 2, 3, 4].forEach(index => {
     const innerText = index > names.length ? "\t" : names[index - 1].name;
-    const className = "name";
+    const className = "setup-name";
     const button = createButton(innerText, className, `${id}--${index + 1}`);
     main.appendChild(button);
   });
