@@ -174,6 +174,7 @@ body {
 .title {
   font-size: 4px;
   padding-top: 300px;
+  float:right;
 }
 
 .top-grid {
@@ -226,7 +227,7 @@ body {
 }
 
 .name {
-  font-size: 30px;
+  font-size: 20px;
 }
 
 .fieldBut {
