@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "start": "live-server",
-    "build": "cp *.js ./docs/. && cp *.css ./docs/. && cp *.html ./docs/."
+    "build": "cp *.js ./docs/. && cp *.css ./docs/. && cp *.html ./docs/. && cp -r font ./docs/." 
   },
   "keywords": [
     "football",

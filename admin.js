@@ -19,8 +19,14 @@ export function setupAdmin() {
     const file = e.target.files[0];
     printFile(file);
   });
-  const games = document.getElementById("games");
   const gameList = get("games");
+  if (gameList) {
+    setupGames(gameList);
+  }
+}
+
+const setupGames = gameList => {
+  const games = document.getElementById("games");
   const SeeGameSetup = matchDiv => () => {
     if (matchDiv.classList.contains("hide")) {
       matchDiv.classList.remove("hide");
@@ -31,47 +37,49 @@ export function setupAdmin() {
   const DownGameSetup = (details, date) => () => {
     download(details.join("\n"), date + ".csv", "csv");
   };
-  if (gameList) {
-    gameList.map((date, index) => {
-      const gameButton = document.createElement("button");
-      const gameDownloadButton = document.createElement("button");
-      const matchDiv = document.createElement("div");
-      matchDiv.classList.add("match");
-      matchDiv.classList.remove("hide");
-      const details = get(date);
-      console.log(details);
-      const eachRow = details.map(d => {
-        const elements = d
-          .split(",")
-          .map(d => {
-            const div = "<div>" + d + "</div>";
-            return div;
-          })
-          .join("\n");
-        const line = "<div class='match-row'>" + elements + "</div>";
-        return line;
-      });
-      const matchTable = eachRow.join("\n\n");
-      matchDiv.innerHTML = matchTable;
-      const seeGame = SeeGameSetup(matchDiv);
-      const downGame = DownGameSetup(details, date);
-      matchDiv.classList.add("hide");
-      gameButton.innerHTML = date;
-      gameButton.classList.add("vrsButton");
-      gameButton.id = "game-" + index;
-      gameButton.addEventListener("click", seeGame);
-
-      gameDownloadButton.innerHTML = "DOWNLOAD";
-      gameDownloadButton.classList.add("vrsButton");
-      gameDownloadButton.id = "game-down-" + index;
-      gameDownloadButton.addEventListener("click", downGame);
-
-      games.appendChild(gameButton);
-      games.appendChild(gameDownloadButton);
-      games.appendChild(matchDiv);
+  console.log("length ", gameList.length, gameList);
+  gameList.map((date, index) => {
+    const gameButton = document.createElement("button");
+    const gameDownloadButton = document.createElement("button");
+    const matchDiv = document.createElement("div");
+    matchDiv.classList.add("match");
+    matchDiv.classList.remove("hide");
+    const details = get(date);
+    console.log(details);
+    const eachRow = details.map((d, index) => {
+      const elements = d
+        .split(",")
+        .map(d => {
+          const div = "<div>" + d + "</div>";
+          return div;
+        })
+        .join("\n");
+      if (index < 3 || index+3 > details.length) {
+        return "<div class='match-row header'>" + elements + "</div>";
+      }
+      return "<div class='match-row '>" + elements + "</div>";
     });
-  }
-}
+    const matchTable = eachRow.join("\n\n");
+    matchDiv.innerHTML = matchTable;
+    const seeGame = SeeGameSetup(matchDiv);
+    const downGame = DownGameSetup(details, date);
+    matchDiv.classList.add("hide");
+    gameButton.innerHTML = date;
+    gameButton.classList.add("vrsButton");
+    gameButton.id = "game-" + index;
+    gameButton.addEventListener("click", seeGame);
+
+    gameDownloadButton.innerHTML = "DOWNLOAD";
+    gameDownloadButton.classList.add("vrsButton");
+    gameDownloadButton.id = "game-down-" + index;
+    gameDownloadButton.addEventListener("click", downGame);
+
+    games.appendChild(gameButton);
+    games.appendChild(gameDownloadButton);
+    games.appendChild(matchDiv);
+  });
+};
+
 function printFile(file) {
   const reader = new FileReader();
   reader.onload = evt => {
