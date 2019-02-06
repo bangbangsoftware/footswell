@@ -75,7 +75,7 @@ const setupGames = gameList => {
     gameDownloadButton.addEventListener("click", downGame);
 
     games.appendChild(gameButton);
-    games.appendChild(gameDownloadButton);
+    matchDiv.appendChild(gameDownloadButton);
     games.appendChild(matchDiv);
   });
 };
