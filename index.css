@@ -199,6 +199,7 @@ body {
   display: grid;
   padding: 10px;
   grid-template-rows: auto auto;
+  justify-content: center;
 }
 
 
@@ -250,6 +251,7 @@ body {
   font-size: 60px;
   margin: 10px;
   font-family: 'FjallaOne-Regular';
+  width: 76%;
 }
 
 .vrsNameInput {
