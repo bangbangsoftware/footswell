@@ -122,7 +122,8 @@ finished.addEventListener("click", () => {
   const time = timeFormat();
   results({ time, event: "Final Whistle" });
   const date = new Date();
-  download(resultRows, date + ".csv", "csv");
+
+  download(JSON.stringify(resultRows), date + ".csv", "csv");
 });
 
 const download = (data, filename, type) => {
