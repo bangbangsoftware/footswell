@@ -40,8 +40,8 @@ h3 {
 }
 
 body {
-  background-color: #b5ad9a;
-  color: rgb(17, 14, 6);
+  background-color: green;
+  color: #faecd8;
   font-family: 'FjallaOne-Regular';
   font-size: 48px;
 }
@@ -59,10 +59,12 @@ body {
   justify-self: center;
 }
 
-.vrsNameDisplay {
+.otherButs {
   display: grid;
   grid-template-columns: 1fr 1fr;
   padding: 40px;
+  grid-template-rows: 100px;
+  grid-gap: 160px;
 }
 
 .match {
@@ -83,12 +85,13 @@ body {
 .play {
   display: grid;
   grid-template-rows: 9% 10% 69% 8% 4%;
-  grid-gap: 3px;
+  grid-gap: 20px;
 }
 
 .timer {
   display: grid;
-  grid-template-columns: 7fr 1fr 0fr 0fr 2fr 7fr;
+  grid-template-columns: 6fr 1fr 0fr 0fr 2fr 7fr;
+  padding: 10px;
 }
 
 .reset {
@@ -98,21 +101,22 @@ body {
 
 .startBut {
   font-size: 30px;
-  width: 100%;
+  width: 0%;
+  justify-self: center;
 }
 
 .mins {
-  font-size: 40px;
+  font-size: 80px;
   justify-self: flex-end;
 }
 
 .secs {
-  font-size: 40px;
+  font-size: 80px;
 }
 
 .goal {
   color: red;
-  font-size: 300%;
+  font-size: 200%;
   text-align: center;
   font-weight: bold;
 }
@@ -120,8 +124,9 @@ body {
 .score {
   display: grid;
   grid-template-columns: auto auto auto auto;
+  grid-template-rows: 300px;
   font-family: 'FjallaOne-Regular';
-  padding: 10px;
+  padding: 35px;
 }
 
 .result {
@@ -152,8 +157,6 @@ body {
 .formation {
   display: grid;
   background-color: green;
-  grid-template-columns: auto auto auto auto auto;
-  grid-template-rows: 100px 100px 100px;
   grid-gap: 30px;
   padding: 30px;
 }
@@ -261,6 +264,7 @@ body {
   font-size: 80px;
   width: 100%;
   font-family: 'FjallaOne-Regular';
+  color: antiquewhite;
 }
 
 .nav {

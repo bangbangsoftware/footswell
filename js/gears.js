@@ -1,4 +1,5 @@
-import { put, get, sub } from "./persist.js";
+//import { put, get, sub } from "./persist.js";
+import { put, reg } from "./data.js";
 
 export function tableSetup(id, names = []) {
   const main = document.getElementById(id);
@@ -11,14 +12,15 @@ export function tableSetup(id, names = []) {
 }
 
 const fixPlayer = onPitch => {
-  return onPitch.map((player, index) => {
-    if (player.position) {
+  return onPitch
+    .map((player, index) => {
+      if (player.position) {
+        return player;
+      }
+      player.position = formClass[index];
       return player;
-
-    }
-    player.position = formClass[index];
-    return player;
-  }).filter(player => player.name.trim().length > 0);
+    })
+    .filter(player => player.name.trim().length > 0);
 };
 
 const formClass = ["fl", "fr", "bl", "bc", "br", "g"];
@@ -54,23 +56,20 @@ const standardSwap = button => {
 };
 
 const store = () => {
-  const hist = get("history");
-  const history = hist || [];
   const players = listPlayers();
-  history.push({ date: new Date(), players });
-  put("history", history);
+};
 
-  const playerString = players;
-  put("players", playerString);
+const getIndex = update => {
+  return buttonList.map((button, index) => {
+    return (update.old.name === button.innerText) ? index : false;
+  }).find(index => index);
 };
 
 export function updateButton(updates) {
-  buttonList.map(button => {
-    const change = updates.find(update => update.name === button.innerText);
-    if (!change) {
-      return button;
-    }
-    button.innerText = `${change.name}`;
+  const butIndexes = updates.map(update => getIndex(update));
+  butIndexes.forEach((bi,i) =>{
+    const change = updates[i];
+    buttonList[i].innerText = `${change.new.name}`;
   });
 }
 
@@ -109,7 +108,6 @@ export function setupScreen(id) {
   const screen = document.getElementById(id);
   const button = document.getElementById(`${id}But`);
   button.addEventListener("click", () => {
-    console.log(listPlayers());
     const hidden = screen.classList.contains("hide");
     pages.forEach(page => {
       page.screen.classList.add("hide");
@@ -207,21 +205,15 @@ export function setupTeamName(id = "teamName") {
   main.value = value;
   display.innerText = value;
 
-  listen(main, e => {
-    const name = e.target.value;
-    put(id, { name });
-    display.innerText = name;
-  });
+  listen(main, e => put(e.target.id, e.target));
 
   const display2 = document.getElementById(`${id}Display2`);
+  reg(display2.id,display2);
 
   main.value = value;
   display2.innerText = value;
 
-  listen(main, e => {
-    const name = e.target.value;
-    display2.innerText = name;
-  });
+  
 }
 
 let fields = [];

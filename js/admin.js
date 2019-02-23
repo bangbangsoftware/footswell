@@ -37,7 +37,6 @@ const setupGames = gameList => {
   const DownGameSetup = (details, date) => () => {
     download(details.join("\n"), date + ".csv", "csv");
   };
-  console.log("length ", gameList.length, gameList);
   gameList.map((date, index) => {
     const gameButton = document.createElement("button");
     const gameDownloadButton = document.createElement("button");
@@ -45,7 +44,6 @@ const setupGames = gameList => {
     matchDiv.classList.add("match");
     matchDiv.classList.remove("hide");
     const details = get(date);
-    console.log(details);
     const eachRow = details.map((d, index) => {
       const elements = d
         .split(",")

@@ -101,11 +101,11 @@ const goalTaken = (teamName, scoreID) => {
 };
 
 const setupAction = () => {
-  const otherName = document.getElementById("vrsNameDisplay2");
-  const teamName = document.getElementById("teamNameDisplay2");
+  const otherName = document.getElementById("vrsName2");
+  const teamName = document.getElementById("teamName2");
   otherName.addEventListener("click", () => goalTaken(otherName, "vrsScored"));
   teamName.addEventListener("click", () => goalTaken(teamName, "scored"));
-  const otherScore = document.getElementById("vrsNameDisplay");
+  const otherScore = document.getElementById("vrsName1");
   otherScore.addEventListener("click", () => {
     const player = otherScore.innerText;
     const date = new Date();

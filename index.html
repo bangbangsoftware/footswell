@@ -29,7 +29,7 @@
 
     <div id="team" class="hide">
         <div class="team-top">
-          <input id="teamNameInput" placeholder="Team Name" class="teamNameInput"></input>
+          <input name="team-name" id="teamName1" placeholder="Team Name" class="teamNameInput"></input>
           <div id="players"></div>
       </div>
     </div> 
@@ -39,12 +39,12 @@
       <div class="topbar">
         <button id="home" class="home selected">HOME</button>
         <div class="vrsName">
-            <h2 id="teamNameDisplay"></h2>
+            <h2 name="team-name" id="teamName2"></h2>
             <div class="vrs">vrs</div>
         </div>
         <button id="away" class="away">AWAY</button>
       </div>
-      <input id="vrsNameInput" placeholder="Team Name" class="vrsNameInput"></input>
+      <input name="vrs-name" id="vrsName1" placeholder="Team Name" class="vrsNameInput"></input>
 
       <div class="table">
          <div><h3>On the pitch</h3></div>
@@ -67,15 +67,15 @@
         <div class="secs" id="seconds">00</div>
      </div>
     <div class="score">
-        <div class="result" id="teamNameDisplay2"></div>
+        <div name="team-name" class="result" id="teamName3"></div>
         <div class="result" id="scored">0</div>
-        <div class="result" id="vrsNameDisplay2"></div>
+        <div class="result" name="vrs-name" id="vrsName2"></div>
         <div class="result" id="vrsScored">0</div>
       </div>
       <div id="play-pitch" class="formation"></div>
       <button class="startBut" id="startBut">KICK OFF</button>
-      <div id="bot-but" class="vrsNameDisplay">
-          <button class="vrsButton hide" id="vrsNameDisplay"></button>
+      <div id="bot-but" class="otherButs">
+          <button class="vrsButton hide" name="vrs-name" id="vrsName3"></button>
           <button class="vrsButton hide" id="final">Final Whistle</button>
       </div>
     </div>
@@ -95,6 +95,19 @@
 .JMML.`Ybmd9'   `Ybmd9'  `Mbmo    M9mmmP'      W      W     `Mbmmd'.JMML..JMML.-->
     </h1>
 
+
   </body>
-  <script type="module" src="index.js"></script>
+  <script type="module" src="./js/fs.js"></script>
+
+  <!--
+  <script>
+      // Check that service workers are registered
+      if ('serviceWorker' in navigator) {
+        // Use the window load event to keep the page load performant
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/js/sw.js');
+        });
+      }
+      </script>
+      -->
 </html>

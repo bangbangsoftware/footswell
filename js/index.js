@@ -1,4 +1,4 @@
-import { setupTeamName } from "./gears.js";
+//import { setupTeamName } from "./gears.js";
 import { setupSetup } from "./setup.js";
 import { setupTeam } from "./team.js";
 import { setupFix } from "./fix.js";
@@ -6,6 +6,9 @@ import { setupAdmin } from "./admin.js";
 import { get } from "./persist.js";
 import { setupPlay } from "./play.js";
 
+import { bagItAndTagIt } from "binder";
+import { switchPlugin } from '../node_modules/binder/switcherPlugin';
+ 
 const standard = [
   { name: "Player 1", place: "pitch", position: "fr" },
   { name: "Player 2", place: "pitch", position: "fl"  },
@@ -27,5 +30,6 @@ setupPlay(pitch);
 setupTeam(players);
 setupFix();
 
-setupTeamName();
-setupTeamName("vrsName");
+//setupTeamName();
+//setupTeamName("vrsName");
+bagItAndTagIt([switchPlugin]);

@@ -1,5 +1,6 @@
 import { setupScreen, tableSetup, playerSetup } from "./gears.js";
 
+
 const toggleHome = (home, awayButt, homeButt) => {
   home = !home;
   if (home) {
