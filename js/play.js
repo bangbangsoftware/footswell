@@ -57,8 +57,8 @@ const start = () => {
     kickoff();
     const div = document.getElementById("bot-but");
     document.getElementById("vrsNameDisplay").classList.remove("hide");
-	const fin = document.getElementById("final");
-	fin.classList.remove("hide");
+    const fin = document.getElementById("final");
+    fin.classList.remove("hide");
     fin.addEventListener("click", () => {
       document.getElementById("vrsNameDisplay").classList.add("hide");
       document.getElementById("bot-but").classList.add("hide");

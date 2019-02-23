@@ -1,113 +1,91 @@
 <html>
   <head>
       <link rel="stylesheet" href="./index.css" />
-      <link rel="stylesheet" href="./font/Fjalla1.css" />
   </head>
   <body>
 
-    <div id="pageNav" class="pageNav">
-      <button id="adminBut" class="nav">ADMIN</button>
-      <button id="setupBut" class="nav selected">SETUP</button>
-      <button id="playBut" class="nav">PLAY</button>
-      <button id="teamBut" class="nav">TEAM</button>
-      <button id="fixBut" class="nav">FIXTURES</button>
+    <div class="title">The BINDER</div>
+    <div class="where">
+        <button toggle="HOME,AWAY" name="where" id="where">HOME</button>
     </div>
-
-    <div id="admin" class="hide">
-      <div class="top-grid hide">
-        <button class="reset" id="reset">Reset data</button>
-        <button class="reset" id="export">Export data</button>
-        <span class="hiddenFileInput">
-          <input class="file-but" id="upload" type="file" name="theFile"/>
-        </span>
+    <div class="teams">
+      <input butlab class="name" name="teamName" placeholder="Team name" id="teamName" value=""></input>
+      <div class="sub center">vrs</div>
+      <input butlab class="name" name="vrsTeam" placeholder="Opposition name" id="opposition" value=""></input>
+      <div id="score" name="score" class="sub center">0</div>
+      <div id="time"  class="time">
+            <div id="minutes">00</div>:<div id="seconds">00</div>
       </div>
-      <div class="game-section" id="games">
-        <div class="game-title">Games Played</div>
-      </div>
+      <button id="vrsScore" name="vrsScore" class="vrsScore" value="0"></button>
     </div>
-
-
-    <div id="team" class="hide">
-        <div class="team-top">
-          <input name="team-name" id="teamName1" placeholder="Team Name" class="teamNameInput"></input>
-          <div id="players"></div>
-      </div>
-    </div> 
-
-
-    <div id="setup">
-      <div class="topbar">
-        <button id="home" class="home selected">HOME</button>
-        <div class="vrsName">
-            <h2 name="team-name" id="teamName2"></h2>
-            <div class="vrs">vrs</div>
+    <div class="scored hide" name="scored" id="scored">SHS</div>
+      <button name="kickoff" class="kickoff" id="kickoff">Kick Off</button>
+    <button toggle="Play On, Whistle blown" name="playing" class="kickoff hide" id="state">Play On</button>
+    <div id="playing" class="hide">
+        <div class="pitch">
+        <button class="pos" name="front1" id="position1"></button>
+        <button class="pos" name="front2" id="position2">Fred</button>
+        <button class="pos" name="front3" id="position3"></button>
+        <button class="pos" name="front4" id="position4">Jim</button>
+        <button class="pos" name="front5" id="position5"></button>
+        <button class="pos" name="mid1"  id="position6">Dick</button>
+        <button class="pos" name="mid2"  id="position7">Johnno</button>
+        <button class="pos" name="mid3"  id="position8"></button>
+        <button class="pos" name="mid4"  id="position9">Filpper</button>
+        <button class="pos" name="mid5"  id="position10">Wazo</button>
+        <button class="pos" name="back1" id="position11">Jimbo</button>
+        <button class="pos" name="back2" id="position12">Popper</button>
+        <button class="pos" name="back3" id="position13"></button>
+        <button class="pos" name="back4" id="position14">Boomer</button>
+        <button class="pos" name="back5" id="position15">Shizal</button>
+        <div></div>
+        <div></div>
+        <button class="pos" name="goalie" id="position16">Maron</button>
+        <div></div>
+        <div></div>
+    </div>  
+  </div>
+  <div id="bench">
+      <div class="pitch">
+      <input class="posInput" swapper="formation" name="front1" id="front1"></input>
+      <input class="posInput" swapper="formation" name="front2" id="front2" value="Fred"></input>
+      <input class="posInput" swapper="formation" name="front3" id="front3"></input>
+      <input class="posInput" swapper="formation" name="front4" id="front4"></input>
+      <input class="posInput" swapper="formation" name="front5" id="front5"></input>
+      <input class="posInput" swapper="formation" name="mid1" id="mid1"></input>
+      <input class="posInput" swapper="formation" name="mid2" id="mid2"></input>
+      <input class="posInput" swapper="formation" name="mid3" id="mid3"></input>
+      <input class="posInput" swapper="formation" name="mid4" id="mid4"></input>
+      <input class="posInput" swapper="formation" name="mid5" id="mid5"></input>
+      <input class="posInput" swapper="formation" name="back1" id="back1"></input>
+      <input class="posInput" swapper="formation" name="back2" id="back2"></input>
+      <input class="posInput" swapper="formation" name="back3" id="back3"></input>
+      <input class="posInput" swapper="formation" name="back4" id="back4"></input>
+      <input class="posInput" swapper="formation" name="back5" id="back5"></input>
+      <div></div>
+      <div></div>
+      <input class="posInput" swapper="formation" name="goalie" id="goalie"></input>
+      <div></div>
+      <div></div>
+    </div>
+      <div class="sub">BENCH</div>
+        <div class="bench" >
+          <button swapper="formation" name="bench1" id="bench1"></button>
+          <button swapper="formation" name="bench2" id="bench2"></button>
+          <button swapper="formation" name="bench3" id="bench3"></button>
+          <button swapper="formation" name="bench4" id="bench4"></button>
+          <button swapper="formation" name="bench5" id="bench5"></button>
         </div>
-        <button id="away" class="away">AWAY</button>
-      </div>
-      <input name="vrs-name" id="vrsName1" placeholder="Team Name" class="vrsNameInput"></input>
-
-      <div class="table">
-         <div><h3>On the pitch</h3></div>
-         <div id="setup-pitch" class="formation"></div>
-         <div><h3>On the bench</h3></div>
-         <div id="bench" class="bench"></div>
-         <div><h3>No Show</h3></div>
-        <div id="noshow" class="noshow"></div>
-     </div>
-    </div>
-
-
-    <div id="play" class="play hide">
-     <div id="goal" class="hide"></div>
-     <div id="timer" class="timer">
-     <div></div>
-     <div></div>
-        <div class="mins" id="minutes">00</div>
-        <div class="secs">:</div>
-        <div class="secs" id="seconds">00</div>
-     </div>
-    <div class="score">
-        <div name="team-name" class="result" id="teamName3"></div>
-        <div class="result" id="scored">0</div>
-        <div class="result" name="vrs-name" id="vrsName2"></div>
-        <div class="result" id="vrsScored">0</div>
-      </div>
-      <div id="play-pitch" class="formation"></div>
-      <button class="startBut" id="startBut">KICK OFF</button>
-      <div id="bot-but" class="otherButs">
-          <button class="vrsButton hide" name="vrs-name" id="vrsName3"></button>
-          <button class="vrsButton hide" id="final">Final Whistle</button>
       </div>
     </div>
-
-
-    <div id="fix" class="hide"></div>
-
-
-    <h1  class="title" id="title">
-<!---    ,...                                                             ,,    ,,  
-  .d' ""                 mm                                        `7MM  `7MM  
-  dM`                    MM                                          MM    MM  
- mMMmm,pW"Wq.   ,pW"Wq.mmMMmm     ,pP"Ybd `7M'    ,A    `MF'.gP"Ya   MM    MM  
-  MM 6W'   `Wb 6W'   `Wb MM       8I   `"   VA   ,VAA   ,V ,M'   Yb  MM    MM  
-  MM 8M     M8 8M     M8 MM       `YMMMa.    VA ,V  VA ,V  8M""""""  MM    MM  
-  MM YA.   ,A9 YA.   ,A9 MM       L.   I8     VVV    VVV   YM.    ,  MM    MM  
-.JMML.`Ybmd9'   `Ybmd9'  `Mbmo    M9mmmP'      W      W     `Mbmmd'.JMML..JMML.-->
-    </h1>
-
-
+    <div class="results">
+      <div class="sub">Time</div>
+      <div class="sub">Event</div>
+    </div>
+    <div id="results"></div>
+    <button class="finished" name="finished" id="finished">Final Whistle</button>
   </body>
   <script type="module" src="./js/fs.js"></script>
 
-  <!--
-  <script>
-      // Check that service workers are registered
-      if ('serviceWorker' in navigator) {
-        // Use the window load event to keep the page load performant
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/js/sw.js');
-        });
-      }
-      </script>
-      -->
+
 </html>
