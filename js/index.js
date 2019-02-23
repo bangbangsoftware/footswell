@@ -32,6 +32,7 @@ const incrementSeconds = (minutes, seconds) => {
   const mins = parseInt(minutes.innerText) + 1;
   if (mins < 10) {
     minutes.innerText = "0" + mins;
+    return;
   }
   minutes.innerText = mins;
   seconds.classList.add("red");
@@ -79,7 +80,7 @@ const results = what => {
 };
 
 const kickoff = document.getElementById("kickoff");
-let running;
+let running = null;
 kickoff.addEventListener("click", e => {
   e.target.style.display = "none";
   document.getElementById("playing").classList.remove("hide");
@@ -100,15 +101,15 @@ kickoff.addEventListener("click", e => {
 
 const state = document.getElementById("state");
 state.addEventListener("click", e => {
-  const isPaused = e.target.innerText === "Play On" ? true : false;
-  if (isPaused) {
-    document.getElementById("playing").classList.add("hide");
-    document.getElementById("bench").classList.remove("hide");
-    clearInterval(running);
-  } else {
+  if (running == null) {
     running = setInterval(increment, 1000);
     document.getElementById("playing").classList.remove("hide");
     document.getElementById("bench").classList.add("hide");
+  } else {
+    document.getElementById("playing").classList.add("hide");
+    document.getElementById("bench").classList.remove("hide");
+    clearInterval(running);
+    running = null;
   }
 });
 

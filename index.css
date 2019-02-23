@@ -84,7 +84,7 @@ body {
 .teams {
   width: 100%;
   display: grid;
-  grid-template-columns: 300px 80px 300px;
+  grid-template-columns: 400px 80px 400px;
   grid-gap: 10px;
   grid-template-rows: 100px;
   justify-content: center;
@@ -106,7 +106,7 @@ button {
 
 input {
   font-size: 30px;
-  background-color: darkkhaki;
+  background-color: #e6e5d8;
 }
 
 .plain {
@@ -138,6 +138,7 @@ input {
 .results {
   display: grid;
   grid-template-columns: 100px auto;
+  grid-gap: 64px;
 }
 
 .bench {
