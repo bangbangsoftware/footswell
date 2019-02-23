@@ -1,14 +1,29 @@
 import { bagItAndTagIt, put, switchPlugin, togglePlugin } from "binder";
 
-console.log("     ,...                                                             ,,    ,,");  
-console.log("   .d'\"\"                mm                                        `7MM  `7MM ");  
-console.log("   dM`                    MM                                          MM    MM  ");
-console.log("  mMMmm,pW\"Wq.   ,pW\"Wq.mmMMmm     ,pP\"Ybd `7M'    ,A    `MF'.gP\"Ya   MM    MM  ");
-console.log("   MM 6W'   `Wb 6W'   `Wb MM       8I   `\"   VA   ,VAA   ,V ,M'   Yb  MM    MM  ");
-console.log("   MM 8M     M8 8M     M8 MM       `YMMMa.    VA ,V  VA ,V  8M\"\"\"\"\"\"  MM    MM  ");
-console.log("   MM YA.   ,A9 YA.   ,A9 MM       L.   I8     VVV    VVV   YM.    ,  MM    MM  ");
-console.log(" .JMML.`Ybmd9'   `Ybmd9'  `Mbmo    M9mmmP'      W      W     `Mbmmd'.JMML..JMML.-->");
-
+console.log(
+  "     ,...                                                             ,,    ,,"
+);
+console.log(
+  '   .d\'""                mm                                        `7MM  `7MM '
+);
+console.log(
+  "   dM`                    MM                                          MM    MM  "
+);
+console.log(
+  '  mMMmm,pW"Wq.   ,pW"Wq.mmMMmm     ,pP"Ybd `7M\'    ,A    `MF\'.gP"Ya   MM    MM  '
+);
+console.log(
+  "   MM 6W'   `Wb 6W'   `Wb MM       8I   `\"   VA   ,VAA   ,V ,M'   Yb  MM    MM  "
+);
+console.log(
+  '   MM 8M     M8 8M     M8 MM       `YMMMa.    VA ,V  VA ,V  8M""""""  MM    MM  '
+);
+console.log(
+  "   MM YA.   ,A9 YA.   ,A9 MM       L.   I8     VVV    VVV   YM.    ,  MM    MM  "
+);
+console.log(
+  " .JMML.`Ybmd9'   `Ybmd9'  `Mbmo    M9mmmP'      W      W     `Mbmmd'.JMML..JMML.-->"
+);
 
 bagItAndTagIt([switchPlugin, togglePlugin]);
 
@@ -71,19 +86,22 @@ kickoff.addEventListener("click", e => {
   document.getElementById("bench").classList.add("hide");
   document.getElementById("kickoff").classList.remove("hide");
   document.getElementById("state").classList.remove("hide");
-  const time = timeFormat(); 
+  const time = timeFormat();
   results({ time, event: "Kick off" });
   running = setInterval(increment, 1000);
   const scoreLabel = document.getElementById("score");
   scoreLabel.innerText = "0";
   const vrsScoreLabel = document.getElementById("vrsScore");
   vrsScoreLabel.innerText = "0";
+  const state = document.getElementById("state");
+  state.innerText === "Whistle blown";
+  put(state);
 });
 
 const state = document.getElementById("state");
 state.addEventListener("click", e => {
-  const pause = e.target.innerText === "Play On";
-  if (pause) {
+  const isPaused = e.target.innerText === "Play On" ? true : false;
+  if (isPaused) {
     document.getElementById("playing").classList.add("hide");
     document.getElementById("bench").classList.remove("hide");
     clearInterval(running);
@@ -119,7 +137,7 @@ const playerScored = e => {
   }
   const scoreLabel = document.getElementById("score");
   scoreLabel.innerText = parseInt(scoreLabel.innerText) + 1;
-  const time = timeFormat(); 
+  const time = timeFormat();
   results({ time, event: "Goal by " + who });
   const scored = document.getElementById("scored");
   scored.innerText = "!!! " + who + " scored !!!";
@@ -129,4 +147,3 @@ const playerScored = e => {
     document.getElementById("scored").classList.add("hide");
   }, 3000);
 };
-

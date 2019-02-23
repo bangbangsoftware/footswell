@@ -18,7 +18,7 @@ body {
 }
 
 .result {
-    font-size: 40px;
+  font-size: 40px;
 }
 
 .center {
@@ -72,20 +72,22 @@ body {
 }
 
 .red {
-    color: red;
+  color: red;
 }
 
 .time {
-    display: grid;
-    grid-template-columns: auto auto auto;
-    font-size:40px;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  font-size: 40px;
 }
 
 .teams {
   width: 100%;
   display: grid;
-  grid-template-columns: auto 80px auto;
+  grid-template-columns: 300px 80px 300px;
   grid-gap: 10px;
+  grid-template-rows: 100px;
+  justify-content: center;
 }
 
 .name {
@@ -104,6 +106,7 @@ button {
 
 input {
   font-size: 30px;
+  background-color: darkkhaki;
 }
 
 .plain {
@@ -129,12 +132,12 @@ input {
 .posInput {
   margin: 10px;
   background-color: green;
-  width: 100%;
+  width: 91%;
 }
 
 .results {
-    display: grid;
-    grid-template-columns: 100px auto;  
+  display: grid;
+  grid-template-columns: 100px auto;
 }
 
 .bench {
