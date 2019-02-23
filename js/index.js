@@ -61,11 +61,13 @@ const timeFormat = () => {
   const date = new Date();
   const hr = zeroFill(date.getHours());
   const mn = zeroFill(date.getMinutes());
-  return `${hr}:${mn}`;
+  const sc = zeroFill(date.getSeconds());
+  return `${hr}:${mn}:${sc}`;
 };
 
 const main = document.getElementById("results");
 
+const resultRows = [];
 const results = what => {
   const time = document.createElement("div");
   time.innerText = what.time;
@@ -77,6 +79,7 @@ const results = what => {
   row.appendChild(time);
   row.appendChild(event);
   main.appendChild(row);
+  resultRows.push(what);
 };
 
 const kickoff = document.getElementById("kickoff");
@@ -112,6 +115,36 @@ state.addEventListener("click", e => {
     running = null;
   }
 });
+const finished = document.getElementById("finished");
+finished.addEventListener("click", () => {
+  clearInterval(running);
+  running = null;
+  const time = timeFormat();
+  results({ time, event: "Final Whistle" });
+  const date = new Date();
+  download(resultRows, date + ".csv", "csv");
+});
+
+const download = (data, filename, type) => {
+  const file = new Blob([data], { type });
+  if (window.navigator.msSaveOrOpenBlob) {
+    // IE10+
+    window.navigator.msSaveOrOpenBlob(file, filename);
+  } else {
+    // Others
+    const a = document.createElement("a");
+
+    const url = URL.createObjectURL(file);
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => {
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    }, 0);
+  }
+};
 
 const concede = document.getElementById("vrsScore");
 concede.addEventListener("click", e => {
