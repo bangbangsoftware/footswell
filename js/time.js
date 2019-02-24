@@ -9,6 +9,11 @@ export function increment () {
   seconds.innerText = secs < 10 ? `0${secs}` : secs;
 }
 
+export function reset(){
+   document.getElementById("seconds").innerText = "00";
+   document.getElementById("minutes").innerText = "00";  
+}
+
 export function timeFormat()  {
   const date = new Date();
   const hr = zeroFill(date.getHours());

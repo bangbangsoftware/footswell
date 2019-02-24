@@ -7,7 +7,7 @@
     "test": "jest",
     "watch": "jest --watch",
     "start": "live-server ./docs/",
-    "build": "rm -r ./docs/* && webpack && cp -r assets/* ./docs/. ",
+    "build": "touch ./docs/what && rm -r ./docs/* && webpack && cp -r assets/* ./docs/. ",
     "webpack": "webpack-dev-server"
   },
   "keywords": [

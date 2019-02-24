@@ -40,9 +40,11 @@ body {
   margin-bottom: 10px;
 }
 
-.finished {
+.bigbut {
   height: 100px;
   width: 100%;
+  margin-top: 10px;
+  margin-bottom: 20px;
 }
 
 .concede {
@@ -55,6 +57,14 @@ body {
   width: 100%;
   height: 110px;
   margin-bottom: 40px;
+}
+
+.state {
+  width: 100%;
+  height: 110px;
+  margin-bottom: 40px;
+  display: none;
+  grid-template-columns: auto auto;
 }
 
 .where {

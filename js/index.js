@@ -1,6 +1,6 @@
 import { bagItAndTagIt, put, switchPlugin, togglePlugin } from "binder";
 import { banner } from "./banner";
-import { increment, timeFormat } from "./time";
+import { increment, timeFormat, reset } from "./time";
 
 banner();
 bagItAndTagIt([switchPlugin, togglePlugin]);
@@ -73,35 +73,41 @@ const results = evt => {
 const kickoff = document.getElementById("kickoff");
 kickoff.addEventListener("click", e => {
   e.target.style.display = "none";
-  document.getElementById("playing").classList.remove("hide");
-  document.getElementById("bench").classList.add("hide");
   document.getElementById("kickoff").classList.remove("hide");
-  document.getElementById("state").classList.remove("hide");
   const time = timeFormat();
-  results({ time, detail: "Kick off" });
-  running = setInterval(increment, 1000);
+  const where = document.getElementById("where").innerText;
+  const op = document.getElementById("opposition").value;
+  results({ time, detail: "Kick off "+where+" vrs "+op });
   const scoreLabel = document.getElementById("score");
   scoreLabel.innerText = "0";
   const vrsScoreLabel = document.getElementById("vrsScore");
   vrsScoreLabel.innerText = "0";
-  const state = document.getElementById("state");
-  state.innerText === "Whistle blown";
-  put(state);
+  playOn(); 
 });
 
-const state = document.getElementById("state");
-state.addEventListener("click", () => {
-  if (running == null) {
-    running = setInterval(increment, 1000);
-    document.getElementById("playing").classList.remove("hide");
-    document.getElementById("bench").classList.add("hide");
-  } else {
-    document.getElementById("playing").classList.add("hide");
-    document.getElementById("bench").classList.remove("hide");
-    clearInterval(running);
-    running = null;
-  }
+const resetButton = document.getElementById("reset");
+resetButton.addEventListener("click", () => reset());
+
+const playonButton = document.getElementById("playon");
+playonButton.addEventListener("click", () => playOn());
+const playOn = () => {
+  running = setInterval(increment, 1000);
+  document.getElementById("whistle").classList.remove("hide");
+  document.getElementById("playing").classList.remove("hide");
+  document.getElementById("bench").classList.add("hide");
+  document.getElementById("stateblock").style.display = "none";
+};
+
+const whistle = document.getElementById("whistle");
+whistle.addEventListener("click", () => {
+  document.getElementById("whistle").classList.add("hide");
+  document.getElementById("playing").classList.add("hide");
+  document.getElementById("bench").classList.remove("hide");
+  document.getElementById("stateblock").style.display = "grid";
+  clearInterval(running);
+  running = null;
 });
+
 const finished = document.getElementById("finished");
 finished.addEventListener("click", () => {
   clearInterval(running);

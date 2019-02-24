@@ -19,7 +19,11 @@
     </div>
     <div class="scored hide" name="scored" id="scored">SHS</div>
       <button name="kickoff" class="kickoff" id="kickoff">Kick Off</button>
-    <button toggle="Play On, Whistle blown" name="playing" class="kickoff hide" id="state">Play On</button>
+      <div id="stateblock" class="state hide">
+        <button id="reset">Reset</button>
+        <button id="playon">Play On</button>
+      </div>
+    <button class="bigbut hide" id="whistle">Whistle blown</button>      
     <div id="playing" class="hide">
         <div class="pitch">
         <button class="pos" name="front1" id="position1"></button>
@@ -92,7 +96,7 @@
       <div class="sub">Undo</div>
     </div>
     
-    <button class="finished" name="finished" id="finished">Final Whistle</button>
+    <button class="bigbut" name="finished" id="finished">Final Whistle</button>
   </body>
   <script type="module" src="./js/fs.js"></script>
 
