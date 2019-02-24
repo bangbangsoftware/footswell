@@ -12,17 +12,17 @@ const secs = document.getElementById("seconds");
 const mins = document.getElementById("minutes");
 const clock = timer(mins, secs);
 
-const resetButton = document.getElementById("reset");
-resetButton.addEventListener("click", () => clock.reset());
+const resetBut = document.getElementById("reset");
+resetBut.addEventListener("click", () => reset());
 
-const playonButton = document.getElementById("playon");
-playonButton.addEventListener("click", () => playOn());
+const playonBut = document.getElementById("playon");
+playonBut.addEventListener("click", () => playOn());
 
-const whistle = document.getElementById("whistle");
-whistle.addEventListener("click", () => paused());
+const whistleBut = document.getElementById("whistle");
+whistleBut.addEventListener("click", () => paused());
 
-const finished = document.getElementById("finished");
-finished.addEventListener("click", ev => ender(ev));
+const finishedBut = document.getElementById("finished");
+finishedBut.addEventListener("click", ev => ender(ev));
 
 const kickoffBut = document.getElementById("kickoff");
 kickoffBut.addEventListener("click", e => kickoff(e));
@@ -78,6 +78,11 @@ const kickoff = e => {
   const vrsScoreLabel = document.getElementById("vrsScore");
   vrsScoreLabel.innerText = "0";
   playOn();
+};
+
+const reset = () =>{
+  events.post({ detail: "New quarter" });
+  clock.reset();
 };
 
 const playOn = () => {

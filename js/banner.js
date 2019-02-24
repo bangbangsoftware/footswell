@@ -3,7 +3,7 @@ export function banner() {
     "     ,...                                                             ,,    ,,"
   );
   console.log(
-    '   .d\'""                 mm                                        `7MM  `7MM '
+    '   .d\'""                  mm                                        `7MM  `7MM '
   );
   console.log(
     "   dM`                    MM                                          MM    MM  "
