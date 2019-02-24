@@ -1,7 +1,7 @@
 import { bagItAndTagIt, put, switchPlugin, togglePlugin } from "binder";
 import { banner } from "./banner";
 import { increment, timeFormat, reset } from "./time";
-import { changeScore, results, download } from "./results";
+import { changeScore, clear, results, download } from "./results";
 
 banner();
 bagItAndTagIt([switchPlugin, togglePlugin]);
@@ -39,20 +39,25 @@ const playerScored = e => {
   }, 3000);
 };
 
-const kickoff = document.getElementById("kickoff");
-kickoff.addEventListener("click", e => {
+const kickoffBut = document.getElementById("kickoff");
+kickoffBut.addEventListener("click", e => {
   e.target.style.display = "none";
+  clear();
+  kickoff();
+});
+
+const kickoff = () => {
   document.getElementById("kickoff").classList.remove("hide");
   const time = timeFormat();
   const where = document.getElementById("where").innerText;
   const op = document.getElementById("opposition").value;
-  results({ time, detail: "Kick off " + where + " vrs " + op });
+  results({ time, detail: "Kick off at " + where.toLocaleLowerCase() + " vrs " + op });
   const scoreLabel = document.getElementById("score");
   scoreLabel.innerText = "0";
   const vrsScoreLabel = document.getElementById("vrsScore");
   vrsScoreLabel.innerText = "0";
   playOn();
-});
+};
 
 const playOn = () => {
   running = setInterval(increment, 1000);
@@ -80,13 +85,17 @@ const whistle = document.getElementById("whistle");
 whistle.addEventListener("click", () => paused());
 
 const finished = document.getElementById("finished");
-finished.addEventListener("click", () => {
-  clearInterval(running);
-  running = null;
+finished.addEventListener("click", ev => ender(ev));
+
+const ender = ev => {
+  paused();
   const time = timeFormat();
   results({ time, detail: "Final Whistle" });
   download();
-});
+  const kickoffBut = document.getElementById("kickoff");
+  kickoffBut.style.display = "block";
+  ev.target.style.display = "none";
+};
 
 const concede = document.getElementById("vrsScore");
 concede.addEventListener("click", e => {

@@ -24,7 +24,12 @@ const redo = evt => {
 };
 const main = document.getElementById("results");
 
-const resultRows = [];
+let resultRows = [];
+
+export function clear() {
+  resultRows = [];
+}
+
 export function results(evt) {
   const time = document.createElement("div");
   time.classList.add("result");
@@ -56,7 +61,7 @@ export function results(evt) {
   resultRows.push(evt);
 }
 
-export function download(resultRows) {
+export function download() {
   const date = new Date();
 
   let data = "";

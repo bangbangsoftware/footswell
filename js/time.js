@@ -11,7 +11,9 @@ export function increment() {
 
 export function reset() {
   document.getElementById("seconds").innerText = "00";
+  document.getElementById("seconds").classList.remove("red");
   document.getElementById("minutes").innerText = "00";
+  document.getElementById("minutes").classList.remove("red");
 }
 
 export function timeFormat() {
