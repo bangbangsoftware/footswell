@@ -27,6 +27,9 @@ finished.addEventListener("click", ev => ender(ev));
 const kickoffBut = document.getElementById("kickoff");
 kickoffBut.addEventListener("click", e => kickoff(e));
 
+const concedeBut = document.getElementById("vrsScore");
+concedeBut.addEventListener("click", e => concede(e));
+
 const setupPlayers = () => {
   for (let n = 1; n < 22; n++) {
     const el = document.getElementById("position" + n);
@@ -103,8 +106,7 @@ const ender = ev => {
   ev.target.style.display = "none";
 };
 
-const concede = document.getElementById("vrsScore");
-concede.addEventListener("click", e => {
+const concede = e => {
   const el = e.target;
   el.innerText = parseInt(el.innerText) + 1;
   const name = document.getElementById("opposition").value;
@@ -112,4 +114,4 @@ concede.addEventListener("click", e => {
     detail: "Conceded a goal from " + name,
     state: "concide"
   });
-});
+};
