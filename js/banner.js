@@ -3,7 +3,7 @@ export function banner() {
     "     ,...                                                             ,,    ,,"
   );
   console.log(
-    '   .d\'""                mm                                        `7MM  `7MM '
+    '   .d\'""                 mm                                        `7MM  `7MM '
   );
   console.log(
     "   dM`                    MM                                          MM    MM  "
@@ -21,6 +21,6 @@ export function banner() {
     "   MM YA.   ,A9 YA.   ,A9 MM       L.   I8     VVV    VVV   YM.    ,  MM    MM  "
   );
   console.log(
-    " .JMML.`Ybmd9'   `Ybmd9'  `Mbmo    M9mmmP'      W      W     `Mbmmd'.JMML..JMML.-->"
+    " .JMML.`Ybmd9'   `Ybmd9'  `Mbmo    M9mmmP'      W      W     `Mbmmd'.JMML..JMML."
   );
 }

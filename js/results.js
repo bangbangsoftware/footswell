@@ -1,28 +1,4 @@
-export function changeScore(n, name = "score") {
-  const scoreLabel = document.getElementById(name);
-  scoreLabel.innerText = parseInt(scoreLabel.innerText) + n;
-}
-
-const undo = evt => {
-  console.log(evt);
-  evt.element.classList.add("crossout");
-  if (evt.state == null) {
-    return;
-  }
-  const tag = evt.state === "concide" ? "vrsScore" : "score";
-  changeScore(-1, tag);
-};
-
-const redo = evt => {
-  console.log(evt);
-  evt.element.classList.remove("crossout");
-  if (evt.state == null) {
-    return;
-  }
-  const tag = evt.state === "concide" ? "vrsScore" : "score";
-  changeScore(1, tag);
-};
-const main = document.getElementById("results");
+import { timeFormat } from "./time";
 
 let resultRows = [];
 
@@ -30,64 +6,96 @@ export function clear() {
   resultRows = [];
 }
 
-export function results(evt) {
-  const time = document.createElement("div");
-  time.classList.add("result");
-  time.innerText = evt.time;
+export function tracker(doc, main) {
+  const changeScore = (n, name = "score") => {
+    const scoreLabel = doc.getElementById(name);
+    scoreLabel.innerText = parseInt(scoreLabel.innerText) + n;
+  };
 
-  const detail = document.createElement("div");
-  detail.classList.add("result");
-  detail.innerText = evt.detail;
-  evt.element = detail;
-
-  const del = document.createElement("button");
-  del.classList.add("result");
-  del.innerText = "X";
-  del.addEventListener("click", () => {
-    evt.crossedOut = !evt.crossedOut;
-    if (evt.crossedOut) {
-      undo(evt);
-    } else {
-      redo(evt);
+  const undo = evt => {
+    console.log(evt);
+    evt.element.classList.add("crossout");
+    if (evt.state == null) {
+      return;
     }
-  });
-  evt.id = resultRows.length;
-  evt.crossedOut = false;
+    const tag = evt.state === "concide" ? "vrsScore" : "score";
+    changeScore(-1, tag);
+  };
 
-  main.appendChild(time);
-  main.appendChild(detail);
-  main.appendChild(del);
+  const redo = evt => {
+    console.log(evt);
+    evt.element.classList.remove("crossout");
+    if (evt.state == null) {
+      return;
+    }
+    const tag = evt.state === "concide" ? "vrsScore" : "score";
+    changeScore(1, tag);
+  };
 
-  resultRows.push(evt);
-}
+  return {
+    changeScore,
+    post: evt => {
+      evt.time = timeFormat();
 
-export function download() {
-  const date = new Date();
+      const time = doc.createElement("div");
+      time.classList.add("result");
+      time.innerText = evt.time;
 
-  let data = "";
-  resultRows
-    .filter(evt => !evt.crossedOut)
-    .forEach(evt => {
-      data = data + evt.time + ", " + evt.detail + "\n";
-    });
-  const filename = date + ".csv";
-  const type = "csv";
-  const file = new Blob([data], { type });
-  if (window.navigator.msSaveOrOpenBlob) {
-    // IE10+
-    window.navigator.msSaveOrOpenBlob(file, filename);
-  } else {
-    // Others
-    const a = document.createElement("a");
+      const detail = doc.createElement("div");
+      detail.classList.add("result");
+      detail.innerText = evt.detail;
+      evt.element = detail;
 
-    const url = URL.createObjectURL(file);
-    a.href = url;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    setTimeout(() => {
-      document.body.removeChild(a);
-      window.URL.revokeObjectURL(url);
-    }, 0);
-  }
+      const del = doc.createElement("button");
+      del.classList.add("result");
+      del.innerText = "X";
+      del.addEventListener("click", () => {
+        evt.crossedOut = !evt.crossedOut;
+        if (evt.crossedOut) {
+          undo(evt);
+        } else {
+          redo(evt);
+        }
+      });
+      evt.id = resultRows.length;
+      evt.crossedOut = false;
+
+      main.appendChild(time);
+      main.appendChild(detail);
+      main.appendChild(del);
+
+      resultRows.push(evt);
+    },
+
+    download: () => {
+      const date = new Date();
+
+      let data = "";
+      resultRows
+        .filter(evt => !evt.crossedOut)
+        .forEach(evt => {
+          data = data + evt.time + ", " + evt.detail + "\n";
+        });
+      const filename = date + ".csv";
+      const type = "csv";
+      const file = new Blob([data], { type });
+      if (window.navigator.msSaveOrOpenBlob) {
+        // IE10+
+        window.navigator.msSaveOrOpenBlob(file, filename);
+        return;
+      }
+      // Others
+      const a = doc.createElement("a");
+
+      const url = URL.createObjectURL(file);
+      a.href = url;
+      a.download = filename;
+      doc.body.appendChild(a);
+      a.click();
+      setTimeout(() => {
+        doc.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+      }, 0);
+    }
+  };
 }

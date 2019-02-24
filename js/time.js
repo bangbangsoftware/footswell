@@ -1,19 +1,20 @@
-export function increment() {
-  const seconds = document.getElementById("seconds");
-  const minutes = document.getElementById("minutes");
-  const secs = parseInt(seconds.innerText) + 1;
-  if (secs > 59) {
-    incrementSeconds(minutes, seconds);
-    return;
-  }
-  seconds.innerText = secs < 10 ? `0${secs}` : secs;
-}
-
-export function reset() {
-  document.getElementById("seconds").innerText = "00";
-  document.getElementById("seconds").classList.remove("red");
-  document.getElementById("minutes").innerText = "00";
-  document.getElementById("minutes").classList.remove("red");
+export function timer(minutesElement, secondsElement) {
+  return {
+    increment: () => {
+      const secs = parseInt(secondsElement.innerText) + 1;
+      if (secs > 59) {
+        incrementSeconds(minutesElement, secondsElement);
+        return;
+      }
+      secondsElement.innerText = secs < 10 ? `0${secs}` : secs;
+    },
+    reset: () => {
+      secondsElement.innerText = "00";
+      secondsElement.classList.remove("red");
+      minutesElement.innerText = "00";
+      minutesElement.classList.remove("red");
+    }
+  };
 }
 
 export function timeFormat() {
