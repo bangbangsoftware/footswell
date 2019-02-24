@@ -1,4 +1,4 @@
-export function increment () {
+export function increment() {
   const seconds = document.getElementById("seconds");
   const minutes = document.getElementById("minutes");
   const secs = parseInt(seconds.innerText) + 1;
@@ -9,12 +9,12 @@ export function increment () {
   seconds.innerText = secs < 10 ? `0${secs}` : secs;
 }
 
-export function reset(){
-   document.getElementById("seconds").innerText = "00";
-   document.getElementById("minutes").innerText = "00";  
+export function reset() {
+  document.getElementById("seconds").innerText = "00";
+  document.getElementById("minutes").innerText = "00";
 }
 
-export function timeFormat()  {
+export function timeFormat() {
   const date = new Date();
   const hr = zeroFill(date.getHours());
   const mn = zeroFill(date.getMinutes());
@@ -34,11 +34,9 @@ const incrementSeconds = (minutes, seconds) => {
   minutes.classList.add("red");
 };
 
-
 const zeroFill = i => {
   if (i < 10) {
     return "0" + i;
   }
   return i;
 };
-
