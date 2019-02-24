@@ -1,71 +1,21 @@
 import { bagItAndTagIt, put, switchPlugin, togglePlugin } from "binder";
+import { banner } from "./banner";
+import { increment, timeFormat } from "./time";
 
-console.log(
-  "     ,...                                                             ,,    ,,"
-);
-console.log(
-  '   .d\'""                mm                                        `7MM  `7MM '
-);
-console.log(
-  "   dM`                    MM                                          MM    MM  "
-);
-console.log(
-  '  mMMmm,pW"Wq.   ,pW"Wq.mmMMmm     ,pP"Ybd `7M\'    ,A    `MF\'.gP"Ya   MM    MM  '
-);
-console.log(
-  "   MM 6W'   `Wb 6W'   `Wb MM       8I   `\"   VA   ,VAA   ,V ,M'   Yb  MM    MM  "
-);
-console.log(
-  '   MM 8M     M8 8M     M8 MM       `YMMMa.    VA ,V  VA ,V  8M""""""  MM    MM  '
-);
-console.log(
-  "   MM YA.   ,A9 YA.   ,A9 MM       L.   I8     VVV    VVV   YM.    ,  MM    MM  "
-);
-console.log(
-  " .JMML.`Ybmd9'   `Ybmd9'  `Mbmo    M9mmmP'      W      W     `Mbmmd'.JMML..JMML.-->"
-);
-
+banner();
 bagItAndTagIt([switchPlugin, togglePlugin]);
 
-const incrementSeconds = (minutes, seconds) => {
-  seconds.innerText = 0;
-  const mins = parseInt(minutes.innerText) + 1;
-  if (mins < 10) {
-    minutes.innerText = "0" + mins;
-    return;
+let running = null;
+
+for (let n = 1; n < 22; n++) {
+  const el = document.getElementById("position" + n);
+  try {
+    el.addEventListener("click", e => playerScored(e));
+  } catch (ex) {
+    console.error(n + ". failed is it in the markup?");
+    console.error(ex);
   }
-  minutes.innerText = mins;
-  seconds.classList.add("red");
-  minutes.classList.add("red");
-};
-
-const increment = () => {
-  const seconds = document.getElementById("seconds");
-  const minutes = document.getElementById("minutes");
-  const secs = parseInt(seconds.innerText) + 1;
-  if (secs > 59) {
-    incrementSeconds(minutes, seconds);
-    return;
-  }
-  seconds.innerText = secs < 10 ? `0${secs}` : secs;
-};
-
-const zeroFill = i => {
-  if (i < 10) {
-    return "0" + i;
-  }
-  return i;
-};
-
-const timeFormat = () => {
-  const date = new Date();
-  const hr = zeroFill(date.getHours());
-  const mn = zeroFill(date.getMinutes());
-  const sc = zeroFill(date.getSeconds());
-  return `${hr}:${mn}:${sc}`;
-};
-
-const main = document.getElementById("results");
+}
 
 const undo = evt => {
   console.log(evt);
@@ -86,6 +36,7 @@ const redo = evt => {
   const tag = evt.state === "concide" ? "vrsScore" : "score";
   changeScore(1, tag);
 };
+const main = document.getElementById("results");
 
 const resultRows = [];
 const results = evt => {
@@ -120,7 +71,6 @@ const results = evt => {
 };
 
 const kickoff = document.getElementById("kickoff");
-let running = null;
 kickoff.addEventListener("click", e => {
   e.target.style.display = "none";
   document.getElementById("playing").classList.remove("hide");
@@ -160,7 +110,13 @@ finished.addEventListener("click", () => {
   results({ time, detail: "Final Whistle" });
   const date = new Date();
 
-  download(JSON.stringify(resultRows), date + ".csv", "csv");
+  let data = "";
+  resultRows
+    .filter(evt => !evt.crossedOut)
+    .forEach(evt => {
+      data = data + evt.time + ", " + evt.detail + "\n";
+    });
+  download(data, date + ".csv", "csv");
 });
 
 const download = (data, filename, type) => {
@@ -190,18 +146,8 @@ concede.addEventListener("click", e => {
   el.innerText = parseInt(el.innerText) + 1;
   const time = timeFormat();
   const name = document.getElementById("opposition").value;
-  results({ time, detail: "Conceded a goal by " + name, state: "concide" });
+  results({ time, detail: "Conceded a goal from " + name, state: "concide" });
 });
-
-for (let n = 1; n < 22; n++) {
-  const el = document.getElementById("position" + n);
-  try {
-    el.addEventListener("click", e => playerScored(e));
-  } catch (ex) {
-    console.error(n + ". failed is it in the markup?");
-    console.error(ex);
-  }
-}
 
 const changeScore = (n, name = "score") => {
   const scoreLabel = document.getElementById(name);
