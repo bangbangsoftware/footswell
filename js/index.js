@@ -67,19 +67,56 @@ const timeFormat = () => {
 
 const main = document.getElementById("results");
 
+const undo = evt => {
+  console.log(evt);
+  evt.element.classList.add("crossout");
+  if (evt.state == null) {
+    return;
+  }
+  const tag = evt.state === "concide" ? "vrsScore" : "score";
+  changeScore(-1, tag);
+};
+
+const redo = evt => {
+  console.log(evt);
+  evt.element.classList.remove("crossout");
+  if (evt.state == null) {
+    return;
+  }
+  const tag = evt.state === "concide" ? "vrsScore" : "score";
+  changeScore(1, tag);
+};
+
 const resultRows = [];
-const results = what => {
+const results = evt => {
   const time = document.createElement("div");
-  time.innerText = what.time;
-  const event = document.createElement("div");
-  event.innerText = what.event;
-  const row = document.createElement("div");
-  row.classList.add("results");
-  row.classList.add("result");
-  row.appendChild(time);
-  row.appendChild(event);
-  main.appendChild(row);
-  resultRows.push(what);
+  time.classList.add("result");
+  time.innerText = evt.time;
+
+  const detail = document.createElement("div");
+  detail.classList.add("result");
+  detail.innerText = evt.detail;
+  evt.element = detail;
+
+  const del = document.createElement("button");
+  del.classList.add("result");
+  del.innerText = "X";
+  del.addEventListener("click", () => {
+    evt.crossedOut = !evt.crossedOut;
+    if (evt.crossedOut) {
+      undo(evt);
+    } else {
+      redo(evt);
+    }
+  });
+  evt.id = resultRows.length;
+  evt.crossedOut = false;
+
+  main.appendChild(time);
+  main.appendChild(detail);
+  main.appendChild(del);
+
+  resultRows.push(evt);
 };
 
 const kickoff = document.getElementById("kickoff");
@@ -91,7 +128,7 @@ kickoff.addEventListener("click", e => {
   document.getElementById("kickoff").classList.remove("hide");
   document.getElementById("state").classList.remove("hide");
   const time = timeFormat();
-  results({ time, event: "Kick off" });
+  results({ time, detail: "Kick off" });
   running = setInterval(increment, 1000);
   const scoreLabel = document.getElementById("score");
   scoreLabel.innerText = "0";
@@ -103,7 +140,7 @@ kickoff.addEventListener("click", e => {
 });
 
 const state = document.getElementById("state");
-state.addEventListener("click", e => {
+state.addEventListener("click", () => {
   if (running == null) {
     running = setInterval(increment, 1000);
     document.getElementById("playing").classList.remove("hide");
@@ -120,7 +157,7 @@ finished.addEventListener("click", () => {
   clearInterval(running);
   running = null;
   const time = timeFormat();
-  results({ time, event: "Final Whistle" });
+  results({ time, detail: "Final Whistle" });
   const date = new Date();
 
   download(JSON.stringify(resultRows), date + ".csv", "csv");
@@ -153,13 +190,23 @@ concede.addEventListener("click", e => {
   el.innerText = parseInt(el.innerText) + 1;
   const time = timeFormat();
   const name = document.getElementById("opposition").value;
-  results({ time, event: "Conceded a goal by " + name });
+  results({ time, detail: "Conceded a goal by " + name, state: "concide" });
 });
 
-for (let n = 1; n < 17; n++) {
+for (let n = 1; n < 22; n++) {
   const el = document.getElementById("position" + n);
-  el.addEventListener("click", e => playerScored(e));
+  try {
+    el.addEventListener("click", e => playerScored(e));
+  } catch (ex) {
+    console.error(n + ". failed is it in the markup?");
+    console.error(ex);
+  }
 }
+
+const changeScore = (n, name = "score") => {
+  const scoreLabel = document.getElementById(name);
+  scoreLabel.innerText = parseInt(scoreLabel.innerText) + n;
+};
 
 const playerScored = e => {
   console.log(e.target.innerText + " scored!");
@@ -170,10 +217,9 @@ const playerScored = e => {
     );
     return;
   }
-  const scoreLabel = document.getElementById("score");
-  scoreLabel.innerText = parseInt(scoreLabel.innerText) + 1;
+  changeScore(1);
   const time = timeFormat();
-  results({ time, event: "Goal by " + who });
+  results({ time, detail: "Goal by " + who, state: "scored" });
   const scored = document.getElementById("scored");
   scored.innerText = "!!! " + who + " scored !!!";
   scored.classList.remove("hide");

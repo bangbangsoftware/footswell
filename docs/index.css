@@ -126,19 +126,22 @@ input {
 
 .pos {
   margin: 10px;
-  background-color: green;
+  background-color: #b1d6b1;
+}
+
+.crossout {
+  text-decoration: line-through;
 }
 
 .posInput {
   margin: 10px;
-  background-color: green;
+  background-color: #cdd4cd;
   width: 91%;
 }
 
 .results {
   display: grid;
-  grid-template-columns: 100px auto;
-  grid-gap: 64px;
+  grid-template-columns: 154px 801px 82px;
 }
 
 .bench {
