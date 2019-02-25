@@ -10,43 +10,39 @@ const changer = doc => (n, name = "score") => {
   scoreLabel.innerText = parseInt(scoreLabel.innerText) + n;
 };
 
-const toggler = changeScore => () => {
-  const undo = evt => {
-    console.log(evt);
-    evt.element.classList.add("crossout");
-    if (evt.state == null) {
-      return;
-    }
-    const tag = evt.state === "concide" ? "vrsScore" : "score";
-    changeScore(-1, tag);
-  };
+const undo = changeScore => evt => {
+  evt.element.classList.add("crossout");
+  if (evt.state == null) {
+    return;
+  }
+  const tag = evt.state === "concide" ? "vrsScore" : "score";
+  changeScore(-1, tag);
+};
 
-  const redo = evt => {
-    console.log(evt);
-    evt.element.classList.remove("crossout");
-    if (evt.state == null) {
-      return;
-    }
-    const tag = evt.state === "concide" ? "vrsScore" : "score";
-    changeScore(1, tag);
-  };
+const redo = changeScore => evt => {
+  evt.element.classList.remove("crossout");
+  if (evt.state == null) {
+    return;
+  }
+  const tag = evt.state === "concide" ? "vrsScore" : "score";
+  changeScore(1, tag);
+};
 
-  const undoToggle = evt => {
-    evt.crossedOut = !evt.crossedOut;
-    if (evt.crossedOut) {
-      undo(evt);
-    } else {
-      redo(evt);
-    }
-  };
-
-  return undoToggle;
+const undoToggle = (undo, redo) => evt => {
+  evt.crossedOut = !evt.crossedOut;
+  if (evt.crossedOut) {
+    undo(evt);
+  } else {
+    redo(evt);
+  }
 };
 
 export function tracker(doc, main) {
   const changeScore = changer(doc);
-  const undoToggle = toggler(changeScore);
-  const post = add(doc, main, undoToggle);
+  const undoFn = undo(changeScore);
+  const redoFn = redo(changeScore);
+  const undoToggleFn = undoToggle(undoFn, redoFn);
+  const post = add(doc, main, undoToggleFn);
   const download = output(doc);
   return {
     changeScore,
@@ -55,7 +51,7 @@ export function tracker(doc, main) {
   };
 }
 
-const add = (doc, main, undoToggle) => evt => {
+const add = (doc, main, toggle) => evt => {
   evt.time = timeFormat();
 
   const time = doc.createElement("div");
@@ -70,7 +66,7 @@ const add = (doc, main, undoToggle) => evt => {
   const del = doc.createElement("button");
   del.classList.add("result");
   del.innerText = "X";
-  del.addEventListener("click", undoToggle(evt));
+  del.addEventListener("click", () => toggle(evt));
   evt.id = resultRows.length;
   evt.crossedOut = false;
 

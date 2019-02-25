@@ -1,4 +1,5 @@
 export function banner() {
+  console.log("");  
   console.log(
     "     ,...                                                             ,,    ,,"
   );
@@ -23,4 +24,5 @@ export function banner() {
   console.log(
     " .JMML.`Ybmd9'   `Ybmd9'  `Mbmo    M9mmmP'      W      W     `Mbmmd'.JMML..JMML."
   );
+  console.log("");
 }
