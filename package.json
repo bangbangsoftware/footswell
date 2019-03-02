@@ -4,7 +4,7 @@
   "description": "Under 8's football app",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --coverage",
     "watch": "jest --watch",
     "start": "live-server ./docs/",
     "build": "touch ./docs/what && rm -r ./docs/* && webpack && cp -r assets/* ./docs/. ",

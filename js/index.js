@@ -28,7 +28,7 @@ const kickoffBut = document.getElementById("kickoff");
 kickoffBut.addEventListener("click", e => kickoff(e));
 
 const concedeBut = document.getElementById("vrsScore");
-concedeBut.addEventListener("click", e => concede(e));
+concedeBut.addEventListener("click", () => concede());
 
 const setupPlayers = () => {
   for (let n = 1; n < 22; n++) {
@@ -54,7 +54,6 @@ const playerScored = e => {
     );
     return;
   }
-  events.changeScore(1);
   events.post({ detail: "Goal by " + who, state: "scored" });
   const scored = document.getElementById("scored");
   scored.innerText = "!!! " + who + " scored !!!";
@@ -111,9 +110,7 @@ const ender = ev => {
   ev.target.style.display = "none";
 };
 
-const concede = e => {
-  const el = e.target;
-  el.innerText = parseInt(el.innerText) + 1;
+const concede = () => {
   const name = document.getElementById("opposition").value;
   events.post({
     detail: "Conceded a goal from " + name,

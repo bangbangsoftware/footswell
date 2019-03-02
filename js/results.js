@@ -5,45 +5,39 @@ export function clear() {
   resultRows = [];
 }
 
-const changer = doc => (n, name = "score") => {
+export function get() {
+  return resultRows.map(m => m);
+}
+
+const changer = doc => (num, name = "score") => {
   const scoreLabel = doc.getElementById(name);
-  scoreLabel.innerText = parseInt(scoreLabel.innerText) + n;
+  scoreLabel.innerText = parseInt(scoreLabel.innerText) + num;
 };
 
-const undo = changeScore => evt => {
-  evt.element.classList.add("crossout");
+const adjustGoal = (changeScore, evt, adjust = 1) => {
   if (evt.state == null) {
     return;
   }
-  const tag = evt.state === "concide" ? "vrsScore" : "score";
-  changeScore(-1, tag);
-};
-
-const redo = changeScore => evt => {
-  evt.element.classList.remove("crossout");
-  if (evt.state == null) {
-    return;
-  }
-  const tag = evt.state === "concide" ? "vrsScore" : "score";
-  changeScore(1, tag);
-};
-
-const undoToggle = (undo, redo) => evt => {
-  evt.crossedOut = !evt.crossedOut;
-  if (evt.crossedOut) {
-    undo(evt);
+  if (adjust < 1) {
+    evt.element.classList.add("crossout");
   } else {
-    redo(evt);
+    evt.element.classList.remove("crossout");
   }
+  const tag = evt.state === "concide" ? "vrsScore" : "score";
+  changeScore(adjust, tag);
+};
+
+const undoToggle = changeScore => evt => {
+  evt.crossedOut = !evt.crossedOut;
+  const adjust = evt.crossedOut ? -1 : 1;
+  adjustGoal(changeScore, evt, adjust);
 };
 
 export function tracker(doc, main) {
   const changeScore = changer(doc);
-  const undoFn = undo(changeScore);
-  const redoFn = redo(changeScore);
-  const undoToggleFn = undoToggle(undoFn, redoFn);
-  const post = add(doc, main, undoToggleFn);
-  const download = output(doc);
+  const undoToggleFn = undoToggle(changeScore);
+  const post = postFn(doc, main, undoToggleFn, changeScore);
+  const download = downloadFn(doc);
   return {
     changeScore,
     post,
@@ -51,19 +45,23 @@ export function tracker(doc, main) {
   };
 }
 
-const add = (doc, main, toggle) => evt => {
+const postFn = (doc, main, toggle, changeScore) => evt => {
+
   evt.time = timeFormat();
 
   const time = doc.createElement("div");
+  time.createName = "time";
   time.classList.add("result");
   time.innerText = evt.time;
 
   const detail = doc.createElement("div");
+  detail.createName = "result";
   detail.classList.add("result");
   detail.innerText = evt.detail;
   evt.element = detail;
 
   const del = doc.createElement("button");
+  del.createName = "deleteToggle";
   del.classList.add("result");
   del.innerText = "X";
   del.addEventListener("click", () => toggle(evt));
@@ -75,9 +73,15 @@ const add = (doc, main, toggle) => evt => {
   main.appendChild(del);
 
   resultRows.push(evt);
+
+  if (evt.state != null) {
+    adjustGoal(changeScore, evt, 1);
+  }
+
+  return evt;
 };
 
-const output = doc => () => {
+const downloadFn = doc => () => {
   const date = new Date();
 
   let data = "";

@@ -1,21 +1,27 @@
 export function timer(minutesElement, secondsElement) {
+  const increment = incrementFn(minutesElement, secondsElement);
+  const reset = resetFn(minutesElement, secondsElement);
   return {
-    increment: () => {
-      const secs = parseInt(secondsElement.innerText) + 1;
-      if (secs > 59) {
-        incrementSeconds(minutesElement, secondsElement);
-        return;
-      }
-      secondsElement.innerText = secs < 10 ? `0${secs}` : secs;
-    },
-    reset: () => {
-      secondsElement.innerText = "00";
-      secondsElement.classList.remove("red");
-      minutesElement.innerText = "00";
-      minutesElement.classList.remove("red");
-    }
+    increment,
+    reset
   };
 }
+
+const incrementFn = (minutesElement, secondsElement) => () => {
+  const secs = parseInt(secondsElement.innerText) + 1;
+  if (secs > 59) {
+    incrementSeconds(minutesElement, secondsElement);
+    return;
+  }
+  secondsElement.innerText = secs < 10 ? `0${secs}` : secs;
+};
+
+const resetFn = (minutesElement, secondsElement) => () => {
+  secondsElement.innerText = "00";
+  secondsElement.classList.remove("red");
+  minutesElement.innerText = "00";
+  minutesElement.classList.remove("red");
+};
 
 export function timeFormat() {
   const date = new Date();
