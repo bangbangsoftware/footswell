@@ -1,3 +1,4 @@
 team.txt
 node_modules/*
 tmp/*
+coverage
