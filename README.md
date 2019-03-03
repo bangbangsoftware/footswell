@@ -1,4 +1,4 @@
-![Logo of the project](./src/assets/logo.png)
+![Logo of the project](./logo.png)
 
 #  Foot Swell 
 > An five a side football app. 
@@ -7,7 +7,7 @@ Set up your under eights, five a side team and record the goals.
 
 ## Installing / Getting started
 
-This is hosted on github pages [here](http://bangbangsoftware.github.io/footswell/)
+This is hosted on github pages [here](http://bangbangsoftware.github.io/footswell/).1
 A quick introduction of the minimal setup you need to get a hello world up &
 running.
 
@@ -84,7 +84,7 @@ npm run build
 * [x] Playing layout design
 * [x] import / export
 * [x] put on github pages
-* [ ] Formation button
+* [x] Formation button
 
 ## Versioning
 
