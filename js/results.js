@@ -15,13 +15,13 @@ const changer = doc => (num, name = "score") => {
 };
 
 const adjustGoal = (changeScore, evt, adjust = 1) => {
-  if (evt.state == null) {
-    return;
-  }
   if (adjust < 1) {
     evt.element.classList.add("crossout");
   } else {
     evt.element.classList.remove("crossout");
+  }
+  if (evt.state == null) {
+    return;
   }
   const tag = evt.state === "concide" ? "vrsScore" : "score";
   changeScore(adjust, tag);

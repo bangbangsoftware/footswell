@@ -72,11 +72,11 @@ npm run build
 
 ## To Do
 
-* [X] Team layout design
+* [x] Team layout design
 * [x] Team layout, with toggle buttons
 * [x] README - this
 * [x] linting
-* [ ] jest
+* [x] jest
 * [x] Team setup page
 * [x] Vrs Field
 * [x] Home and away toggle buttons
@@ -84,6 +84,7 @@ npm run build
 * [x] Playing layout design
 * [x] import / export
 * [x] put on github pages
+* [ ] Formation button
 
 ## Versioning
 

@@ -18,10 +18,14 @@
       <button id="vrsScore" name="vrsScore" class="vrsScore" value="0"></button>
     </div>
     <div class="scored hide" name="scored" id="scored">SHS</div>
-      <button name="kickoff" class="kickoff" id="kickoff">Kick Off</button>
+    <div class="kickoff" id="kickoff-grid">
+      <button id="kickoff">Kick Off</button>
+      <button id="newForm1">Update formation</button>
+    </div> 
       <div id="stateblock" class="state hide">
-        <button id="reset">Reset</button>
+        <button id="reset">Reset clock</button>
         <button id="playon">Play On</button>
+        <button id="newForm2">Update formation</button>
       </div>
     <button class="bigbut hide" id="whistle">Whistle blown</button>      
     <div id="playing" class="hide">
@@ -96,7 +100,7 @@
       <div class="sub">Undo</div>
     </div>
     
-    <button class="bigbut1" name="finished" id="finished">Final Whistle</button>
+    <button class="bigbut hide" name="finished" id="finished">Final Whistle</button>
   </body>
   <script type="module" src="./js/fs.js"></script>
 
