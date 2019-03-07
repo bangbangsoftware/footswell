@@ -1,4 +1,6 @@
-import { bagItAndTagIt, put, switchPlugin, togglePlugin } from "binder";
+import { bagItAndTagIt, put } from "binder";
+import { switchPlugin } from "binder/dist/plugins/switcherPlugin";
+import { togglePlugin } from "binder/dist/plugins/togglePlugin";
 import { banner } from "./banner";
 import { timer } from "./time";
 import { clear, tracker } from "./results";
@@ -135,20 +137,20 @@ const concede = () => {
   });
 };
 
-const adder = (tag, from, to) =>{
+const adder = (tag, from, to) => {
   const positions = getFormations(from, to);
-  if (!positions){
+  if (!positions) {
     return "";
   }
-  return tag+": "+positions+". ";
+  return tag + ": " + positions + ". ";
 };
 
 const postForm = () => {
   console.log("FORMATION");
-  const front = adder("Up front",1, 6);
-  const mid = adder("Midfield",6, 11);
-  const back = adder("Back",11, 16);
-  const goal = adder("Goal",16, 17);
-  const detail = "Formation-  "+front+mid+back+goal;
-  events.post({detail});
+  const front = adder("Up front", 1, 6);
+  const mid = adder("Midfield", 6, 11);
+  const back = adder("Back", 11, 16);
+  const goal = adder("Goal", 16, 17);
+  const detail = "Formation-  " + front + mid + back + goal;
+  events.post({ detail });
 };

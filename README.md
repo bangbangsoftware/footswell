@@ -1,4 +1,4 @@
-![Logo of the project](./logo.png)
+![Logo of the project](logo.png)
 
 #  Foot Swell 
 > An five a side football app. 
@@ -14,8 +14,6 @@ running.
 ## Security
 
 Everything is stored locally, so as long as your local storage is safe, so is your data.
-
-## Developing
 
 A pure js application that makes great use of local storage. 
 
