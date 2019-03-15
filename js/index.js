@@ -1,6 +1,7 @@
 import { bagItAndTagIt, put } from "binder";
-import { switchPlugin } from "binder/dist/plugins/switcherPlugin";
+import { swapperPlugin } from "binder/dist/plugins/swapperPlugin";
 import { togglePlugin } from "binder/dist/plugins/togglePlugin";
+import { showHidePlugin } from "binder/dist/plugins/showhidePlugin";
 import { banner } from "./banner";
 import { timer } from "./time";
 import { clear, tracker } from "./results";
@@ -51,7 +52,7 @@ const setupPlayers = () => {
 };
 
 banner();
-bagItAndTagIt([switchPlugin, togglePlugin]);
+bagItAndTagIt([swapperPlugin, togglePlugin, showHidePlugin]);
 setupPlayers();
 
 const playerScored = e => {

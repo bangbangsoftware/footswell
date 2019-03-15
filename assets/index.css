@@ -58,7 +58,7 @@ body {
   height: 110px;
   margin-bottom: 40px;
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: auto auto auto;
 }
 
 .state {
