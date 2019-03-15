@@ -148,11 +148,13 @@ input {
   margin: 10px;
   background-color: #cdd4cd;
   width: 91%;
+  min-width: 300px;
 }
 
 .results {
   display: grid;
   grid-template-columns: 1fr 10fr 1fr;
+  grid-gap: 10px;
 }
 
 .bench {
