@@ -59,6 +59,7 @@ body {
   margin-bottom: 40px;
   display: grid;
   grid-template-columns: auto auto auto;
+  grid-gap: 10px;
 }
 
 .state {
@@ -153,7 +154,7 @@ input {
 
 .results {
   display: grid;
-  grid-template-columns: 1fr 10fr 1fr;
+  grid-template-columns: 2fr 10fr 1fr;
   grid-gap: 10px;
 }
 
