@@ -33,6 +33,12 @@ const undoToggle = changeScore => evt => {
   adjustGoal(changeScore, evt, adjust);
 };
 
+const replacePost = (from, to) => {
+  const oldResult = resultRows.find(el => el.detail === from);
+  oldResult.element.innerText = ""+to;
+  oldResult.detail = ""+to;
+};
+
 export function tracker(doc, main) {
   const changeScore = changer(doc);
   const undoToggleFn = undoToggle(changeScore);
@@ -41,12 +47,12 @@ export function tracker(doc, main) {
   return {
     changeScore,
     post,
+    replacePost,
     download
   };
 }
 
 const postFn = (doc, main, toggle, changeScore) => evt => {
-
   evt.time = timeFormat();
 
   const time = doc.createElement("div");

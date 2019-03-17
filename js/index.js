@@ -39,6 +39,9 @@ formBut1.addEventListener("click", () => postForm());
 const formBut2 = document.getElementById("newForm2");
 formBut2.addEventListener("click", () => postForm());
 
+const where = document.getElementById("where");
+where.addEventListener("click", () => toggleWhere());
+
 const setupPlayers = () => {
   for (let n = 1; n < 22; n++) {
     const el = document.getElementById("position" + n);
@@ -88,15 +91,27 @@ const kickoff = () => {
   document.getElementById("kickoff-grid").style.display = "none";
   document.getElementById("finished").classList.remove("hide");
   clear();
-  const where = document.getElementById("where").innerText;
-  const op = document.getElementById("opposition").value;
-  const detail = "Kick off at " + where.toLocaleLowerCase() + " vrs " + op;
+  const detail = createKickOffText();
   events.post({ detail });
   const scoreLabel = document.getElementById("score");
   scoreLabel.innerText = "0";
   const vrsScoreLabel = document.getElementById("vrsScore");
   vrsScoreLabel.innerText = "0";
   playOn();
+};
+
+const createKickOffText = (toggle = false) => {
+  const where = document.getElementById("where").innerText;
+  const toggleText = where === "HOME" ? "away" : "home";
+  const whereText = toggle ? toggleText : where.toLowerCase();
+  const op = document.getElementById("opposition").value;
+  return "Kick off " + whereText + " vrs " + op;
+};
+
+const toggleWhere = () => {
+  const last = createKickOffText();
+  const updated = createKickOffText(true);
+  events.replacePost(last, updated);
 };
 
 const reset = () => {

@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest --coverage",
     "watch": "jest --watch",
-    "start": "live-server ./docs/",
+    "start": "npm run build && live-server ./docs/",
     "build": "touch ./docs/what && rm -r ./docs/* && webpack && cp -r assets/* ./docs/. ",
     "webpack": "webpack-dev-server"
   },
