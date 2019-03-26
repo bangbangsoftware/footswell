@@ -138,7 +138,11 @@ const paused = () => {
 
 const ender = ev => {
   paused();
-  events.post({ detail: "Final Whistle" });
+  const vrsScore = document.getElementById("vrsScore").innerText;
+  const score = document.getElementById("score").innerText;
+  const vrsName = document.getElementById("opposition").value;
+  const name    = document.getElementById("teamName").value;
+  events.post({ detail: "Final Whistle- "+name+":"+score+" vrs "+vrsName+": "+vrsScore+"" });
   events.download();
   const kickoffBut = document.getElementById("kickoff");
   kickoffBut.style.display = "block";
