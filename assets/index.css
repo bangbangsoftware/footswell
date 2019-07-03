@@ -132,7 +132,7 @@ input {
 .pitch
  {
   display: grid;
-  grid-template-columns: 190px 190px 190px 190px 190px;
+  grid-template-columns: 187px 187px 187px 187px 187px;
   grid-template-rows: 100px 100px 100px 150px;
   grid-gap: 10px;
   background-color: green;
@@ -146,7 +146,7 @@ input {
 
 
 .pos {
-  margin: 10px;
+  margin: 10px
   background-color: #b1d6b1;
   position: relative;
   width: 90%;
