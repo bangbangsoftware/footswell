@@ -1,10 +1,20 @@
-import { bagItAndTagIt, put } from "binder";
+import { bagItAndTagIt, put, get, setMode, getMode } from "binder";
 import { swapperPlugin } from "binder/dist/plugins/swapperPlugin";
 import { togglePlugin } from "binder/dist/plugins/togglePlugin";
 import { showHidePlugin } from "binder/dist/plugins/showhidePlugin";
+import { ifPlugin } from "binder/dist/plugins/ifPlugin"; 
 import { banner } from "./banner";
 import { timer } from "./time";
 import { clear, tracker } from "./results";
+
+import { swapPlugin, actionMover } from "binder/dist/plugins/swapPlugin.js";
+
+const group = "swaps";
+const actionID = "captain-butt";
+const data = "- Captian -";
+const dataIDpostFix = "data";
+const mover = { group, actionID, data, dataIDpostFix};
+actionMover(mover);
 
 let running = null;
 
@@ -33,18 +43,18 @@ kickoffBut.addEventListener("click", () => kickoff());
 const concedeBut = document.getElementById("vrsScore");
 concedeBut.addEventListener("click", () => concede());
 
-const formBut1 = document.getElementById("newForm1");
-formBut1.addEventListener("click", () => postForm());
+const infoBut1 = document.getElementById("updateInfo");
+infoBut1.addEventListener("click", () => postForm());
 
-const formBut2 = document.getElementById("newForm2");
-formBut2.addEventListener("click", () => postForm());
+const infoBut2 = document.getElementById("updateInfo2");
+infoBut2.addEventListener("click", () => postForm());
 
 const where = document.getElementById("where");
 where.addEventListener("click", () => toggleWhere());
 
 const setupPlayers = () => {
   for (let n = 1; n < 22; n++) {
-    const el = document.getElementById("position" + n);
+    const el = document.getElementById("slot" + n+"b");
     try {
       el.addEventListener("click", e => playerScored(e));
     } catch (ex) {
@@ -55,14 +65,18 @@ const setupPlayers = () => {
 };
 
 banner();
-bagItAndTagIt([swapperPlugin, togglePlugin, showHidePlugin]);
+bagItAndTagIt([swapPlugin, swapperPlugin, togglePlugin, showHidePlugin, ifPlugin]);
 setupPlayers();
 
 const playerScored = e => {
-  const who = e.target.innerText;
+  if (getMode() !== "kickoff"){
+    return;
+  }
+  const element = e.target;
+  const who = getPlayerName(element);
   if (!who) {
-    console.log(
-      e.target.name + " (" + e.target.id + ") has no player defined!"
+    console.error(
+      element.name + " (" + element.id + ") has no player defined!"
     );
     return;
   }
@@ -76,18 +90,8 @@ const playerScored = e => {
   }, 3000);
 };
 
-const getFormations = (from, to) => {
-  let output = "";
-  for (let n = from; n < to; n++) {
-    const el = document.getElementById("position" + n);
-    if (el.innerText) {
-      output = output === "" ? el.innerText : output + ", " + el.innerText;
-    }
-  }
-  return output;
-};
-
 const kickoff = () => {
+  setMode("kickoff");  
   document.getElementById("kickoff-grid").style.display = "none";
   document.getElementById("finished").classList.remove("hide");
   clear();
@@ -120,17 +124,15 @@ const reset = () => {
 };
 
 const playOn = () => {
+  setMode("kickoff");  
   running = setInterval(clock.increment, 1000);
   document.getElementById("whistle").classList.remove("hide");
-  document.getElementById("playing").classList.remove("hide");
-  document.getElementById("bench").classList.add("hide");
   document.getElementById("stateblock").style.display = "none";
 };
 
 const paused = () => {
+  setMode("");  
   document.getElementById("whistle").classList.add("hide");
-  document.getElementById("playing").classList.add("hide");
-  document.getElementById("bench").classList.remove("hide");
   document.getElementById("stateblock").style.display = "grid";
   clearInterval(running);
   running = null;
@@ -157,20 +159,90 @@ const concede = () => {
   });
 };
 
-const adder = (tag, from, to) => {
-  const positions = getFormations(from, to);
+const getInnerNames = id =>{
+  const el = document.getElementById(id);
+  if (el == null){
+    console.error(id+" doesn't exist?!");
+    return null;
+  }
+  return getNames(el);
+};
+
+const getNames = (el, list = []) => {
+  const name = el.getAttribute("name");
+  if (name != null) {
+    list.push(name);
+  }
+  if (el.children.length > 0){
+    for (let i = 0; i < el.children.length; i++) {
+      list = getNames(el.children[i], list);     
+    }
+  }
+  return list;
+};
+  
+const isCaptain = names =>{
+  const key = names.find(name => name.indexOf(dataIDpostFix) > -1);
+  if (key == null){
+    return false;
+  }
+  const captain = get(key);
+  return captain.currentValue.length > 0;
+};
+
+const getPlayerName = element =>{
+  const names = getNames(element);
+  return getPlayerNameFromList(names);
+};  
+
+const getPlayerNameFromList = names =>{
+  const key = names.find(name => name.indexOf(dataIDpostFix) == -1);
+  if (key == null){
+    return null;
+  }
+  const playerName =  get(key);
+  return playerName.currentValue;
+};
+
+
+const getFormation = (prefix, n = 1, output = "")=>{
+  if (n > 5){
+    return output;
+  }
+  const id = prefix+"-" + n;
+  const names = getInnerNames(id);
+  const playerName = getPlayerNameFromList(names); 
+  const isCap = isCaptain(names);
+  const cap = (isCap)? "(Captain)":"";
+  if (playerName == null) {
+    console.error(id+" has no player name ?!!");
+  } else {
+    const player = playerName + cap;
+    output = output === "" ? player : output + ", " + player;
+  }
+  return getFormation(prefix, n+1, output);
+};
+
+const adder = (tag, prefix) => {
+  const positions = getFormation(prefix,1, "");
   if (!positions) {
     return "";
   }
   return tag + ": " + positions + ". ";
 };
 
+const getGoalie = () => {
+  const names = getInnerNames("goalie");
+  const playerName = getPlayerNameFromList(names); 
+  return "Goalie: "+playerName;
+};
+
 const postForm = () => {
-  console.log("FORMATION");
-  const front = adder("Up front", 1, 6);
-  const mid = adder("Midfield", 6, 11);
-  const back = adder("Back", 11, 16);
-  const goal = adder("Goal", 16, 17);
+  const front = adder("Up front", "front");
+  const mid = adder("Mid field", "mid");
+  const back = adder("Back", "back");
+  const goal = getGoalie();
   const detail = "Formation-  " + front + mid + back + goal;
+  console.log("FORMATION ",detail);
   events.post({ detail });
 };

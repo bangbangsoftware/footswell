@@ -1,3 +1,4 @@
+@import url(https://fonts.googleapis.com/css?family=Lato:700);
 body {
   background-color: lightgoldenrodyellow;
 }
@@ -58,7 +59,7 @@ body {
   height: 110px;
   margin-bottom: 40px;
   display: grid;
-  grid-template-columns: auto auto auto;
+  grid-template-columns: auto auto auto auto;
   grid-gap: 10px;
 }
 
@@ -128,7 +129,8 @@ input {
   text-align: center;
 }
 
-.pitch {
+.pitch
+ {
   display: grid;
   grid-template-columns: auto auto auto auto auto;
   grid-template-rows: 100px 100px 100px 100px;
@@ -139,17 +141,103 @@ input {
 .pos {
   margin: 10px;
   background-color: #b1d6b1;
+  position: relative;
+  width: 90%;
+  height: 100px;
+  box-shadow: 0 0 15px rgba(0,0,0,.1);
+}
+
+.ribbon {
+  width: 100px;
+  height: 100px;
+  /*overflow: hidden;*/
+  position: absolute;
+}
+
+.abso {
+  position: relative;
+}
+
+.hundred {
+  height: 100%;
+  width: 100%;
+}
+
+.caprib {
+  min-height: 40px;
+  text-align: center;
+  font-size: 20px;
+  border: 30px solid rgb(124, 70, 70);
+  width: 100px;
+}
+
+.capbox {
+  display: grid;
+  grid-template-columns: auto auto;
+  border: 5px solid white
+}
+
+.capInput {
+  min-height: 50px;
+  text-align: start;
+  font-size: 40px;
+  color: white;
+}
+
+.ribbon span {
+  position: absolute;
+  display: block;
+  width: 100px;
+  margin-left: -135px;
+  margin-top: -27px;
+  background-color: #3498db;
+  box-shadow: 0 5px 10px rgba(0,0,0,.1);
+  color: #fff;
+  font: 30 15px/1 'Lato', sans-serif;
+  text-shadow: 0 1px 1px rgba(0,0,0,.2);
+  text-transform: uppercase;
+  text-align: center;
+}
+
+/* top left*/
+.ribbon-top-left {
+  margin-top: 40px;
+}
+.ribbon-top-left::before,
+.ribbon-top-left::after {
+  border-top-color: transparent;
+  border-left-color: transparent;
+}
+.ribbon-top-left::before {
+  top: 100;
+  right: 40;
+}
+.ribbon-top-left::after {
+  bottom: 0;
+  left: 0;
+}
+.ribbon-top-left span {
+  transform: rotate(-45deg);
 }
 
 .crossout {
   text-decoration: line-through;
 }
 
-.posInput {
+.posPlay {
   margin: 10px;
   background-color: #cdd4cd;
   width: 91%;
   min-width: 60px;
+  min-height: 80px;
+}
+
+.posInput {
+  margin: 10px;
+  background-color: #cdd4cd;
+  width: 250px;
+  min-width: 60px;
+  min-height: 80px;
 }
 
 .results {

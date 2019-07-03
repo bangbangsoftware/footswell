@@ -1,13 +1,15 @@
 const path = require("path");
 
 module.exports = {
-  entry: "./js/index.js",
+  entry: {
+    index: "./js/index.js",
+  },
   devtool: "source-map",
   mode: "production",
   output: {
     path: path.resolve(__dirname, "docs/js"),
     publicPath: "/assets/",
-    filename: "fs.js"
+    filename: '[name].fs.js',
   },
   devServer: {
     contentBase: path.join(__dirname, "docs"),
