@@ -134,7 +134,7 @@ input {
   display: grid;
   grid-template-columns: auto auto auto auto auto;
   grid-template-rows: 100px 100px 100px 150px;
-  grid-gap: 40px;
+  grid-gap: 4px;
   background-color: green;
 }
 
@@ -235,7 +235,7 @@ input {
 .posInput {
   margin: 10px;
   background-color: #cdd4cd;
-  width: 200px;
+  width: 185px;
   height: 100px;
   min-width: 60px;
   min-height: 80px;
