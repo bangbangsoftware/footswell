@@ -134,7 +134,7 @@ input {
   display: grid;
   grid-template-columns: 187px 187px 187px 187px 187px;
   grid-template-rows: 100px 100px 100px 150px;
-  grid-gap: 10px;
+  grid-gap: 8px;
   background-color: green;
 }
 
