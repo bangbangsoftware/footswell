@@ -132,15 +132,18 @@ input {
 .pitch
  {
   display: grid;
-  grid-template-columns: 186px 186px 186px 186px 186px;
+  /** grid-template-columns: 186px 186px 186px 186px 186px; **/
+  grid-template-columns: 2fr 2fr 2fr 2fr 2fr;
   grid-template-rows: 100px 100px 100px 150px;
   grid-gap: 8px;
   background-color: green;
+  width: 100%;
 }
 
 .posInput {
   background-color: #cdd4cd;
-  width: 180px;
+/**  width: 180px; **/
+  width: 100%;
   height: 100px;
 }
 
