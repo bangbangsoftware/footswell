@@ -250,7 +250,7 @@ input {
 
 .bench {
   display: grid;
-  grid-template-columns: auto auto auto auto auto;
+  grid-template-columns: 2fr 2fr 2fr 2fr 2fr;
   grid-template-rows: 100px;
   grid-gap: 10px;
 }
