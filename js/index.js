@@ -52,6 +52,9 @@ infoBut2.addEventListener("click", () => postForm());
 const where = document.getElementById("where");
 where.addEventListener("click", () => toggleWhere());
 
+const edit = document.getElementById("edit");
+edit.addEventListener("click", () => toggleEdit());
+
 const setupPlayers = () => {
   for (let n = 1; n < 22; n++) {
     const el = document.getElementById("slot" + n+"b");
@@ -110,6 +113,12 @@ const createKickOffText = (toggle = false) => {
   const whereText = toggle ? toggleText : where.toLowerCase();
   const op = document.getElementById("opposition").value;
   return "Kick off " + whereText + " vrs " + op;
+};
+
+const toggleEdit = () => {
+  const current = getMode();
+  const nextMode= (current == "edit")? "": "edit";
+  setMode(nextMode);
 };
 
 const toggleWhere = () => {

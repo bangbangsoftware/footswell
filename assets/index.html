@@ -1,209 +1,255 @@
 <html>
-  <head><link rel="stylesheet" href="./index.css" /></head>
-  <body>
-    <div class="where">
-        <button toggle="HOME,AWAY" name="where" id="where">HOME</button>
+
+<head>
+  <link rel="stylesheet" href="./index.css" />
+</head>
+
+<body>
+  <div class="where">
+    <button toggle="HOME,AWAY" name="where" id="where">HOME</button>
+  </div>
+  <div class="teams">
+    <input butlab class="name" name="teamName" placeholder="Team name" id="teamName" value=""></input>
+    <div class="sub center">vrs</div>
+    <input butlab class="name" name="vrsTeam" placeholder="Opposition name" id="opposition" value=""></input>
+    <div id="score" name="score" class="sub center">0</div>
+    <div id="time" class="time">
+      <div id="minutes">00</div>:<div id="seconds">00</div>
     </div>
-    <div class="teams">
-      <input butlab class="name" name="teamName" placeholder="Team name" id="teamName" value=""></input>
-      <div class="sub center">vrs</div>
-      <input butlab class="name" name="vrsTeam" placeholder="Opposition name" id="opposition" value=""></input>
-      <div id="score" name="score" class="sub center">0</div>
-      <div id="time"  class="time">
-            <div id="minutes">00</div>:<div id="seconds">00</div>
-      </div>
-      <button id="vrsScore" name="vrsScore" class="vrsScore" value="0"></button>
-    </div>
-    <div class="scored hide" name="scored" id="scored">SHS</div>
-    <div class="kickoff" id="kickoff-grid">
-      <button showhide-trigger="teamsetup" id="edit">Edit</button>
-      <button swap-action="swaps" class="pickCap" id="captain-butt">Pick Captain</button>    
-      <button id="updateInfo">Update Formation</button>
-      <button id="kickoff">Kick Off</button>
-    </div> 
-      <div id="stateblock" class="kickoff hide">
-        <button showhide-trigger="teamsetup" id="edit2">Edit</button>
-        <button id="reset">Reset clock</button>
-        <button id="playon">Play On</button>
-        <button id="updateInfo2">Update formation</button>
-      </div>
-    <button class="bigbut hide" id="whistle">Whistle blown</button>      
-  </div> 
-  
+    <button id="vrsScore" name="vrsScore" class="vrsScore" value="0"></button>
+  </div>
+  <div class="scored hide" name="scored" id="scored">SHS</div>
+  <div class="kickoff" id="kickoff-grid">
+    <button showhide-trigger="teamsetup" id="edit">Edit</button>
+    <button swap-action="swaps" class="pickCap" id="captain-butt">Pick Captain</button>
+    <button id="updateInfo">Update Formation</button>
+    <button id="kickoff">Kick Off</button>
+  </div>
+  <div id="stateblock" class="kickoff hide">
+    <button showhide-trigger="teamsetup" id="edit2">Edit</button>
+    <button id="reset">Reset clock</button>
+    <button id="playon">Play On</button>
+    <button id="updateInfo2">Update formation</button>
+  </div>
+  <button class="bigbut hide" id="whistle">Whistle blown</button>
+  </div>
+
   <div id="bench">
-      <div class="pitch">
-       <div id="front-1">
-        <button showhide="teamsetup" class="posInput" id="slot1b"  swap="swaps" >
-          <span id="slot1r" class="ribbon ribbon-top-left"  ><span id="slot1b-data" name="slot1b-data"></span></span>          
-          <div  id="slot1" name="slot1" ></div>
-        </button>
-        <input showhide="teamsetup" class="posInput hide" name="slot1" id="slot1i"></input>
-      </div>        
+    <div class="pitch">
+      <div id="front-1">
+        <div swap="swaps">
+          <button showhide="teamsetup" class="posInput" id="slot1b">
+            <span id="slot1r" class="ribbon ribbon-top-left"><span id="slot1b-data" name="slot1b-data"></span></span>
+            <div id="slot1" name="slot1"></div>
+          </button>
+          <input showhide="teamsetup" class="posInput hide" name="slot1" id="slot1i"></input>
+        </div>
+      </div>
       <div id="front-2">
-        <button showhide="teamsetup" class="posInput" id="slot2b"  swap="swaps" >
-          <span id="slot2r" class="ribbon ribbon-top-left"  ><span id="slot2b-data" name="slot2b-data"></span></span>          
-          <div  id="slot2" name="slot2" ></div>
-        </button>
-        <input showhide="teamsetup" class="posInput hide" name="slot2" id="slot2i"></input>
-      </div>        
+        <div swap="swaps">
+          <button showhide="teamsetup" class="posInput" id="slot2b">
+            <span id="slot2r" class="ribbon ribbon-top-left"><span id="slot2b-data" name="slot2b-data"></span></span>
+            <div id="slot2" name="slot2"></div>
+          </button>
+          <input showhide="teamsetup" class="posInput hide" name="slot2" id="slot2i"></input>
+        </div>
+      </div>
       <div id="front-3">
-        <button showhide="teamsetup" class="posInput" id="slot3b"  swap="swaps" >
-          <span id="slot3r" class="ribbon ribbon-top-left"  ><span id="slot3b-data" name="slot3b-data"></span></span>          
-          <div  id="slot3" name="slot3" ></div>
-        </button>
-        <input showhide="teamsetup" class="posInput hide" name="slot3" id="slot3i"></input>
-      </div>        
+        <div swap="swaps">
+          <button showhide="teamsetup" class="posInput" id="slot3b">
+            <span id="slot3r" class="ribbon ribbon-top-left"><span id="slot3b-data" name="slot3b-data"></span></span>
+            <div id="slot3" name="slot3"></div>
+          </button>
+          <input showhide="teamsetup" class="posInput hide" name="slot3" id="slot3i"></input>
+        </div>
+      </div>
       <div id="front-4">
-        <button showhide="teamsetup" class="posInput" id="slot4b"  swap="swaps" >
-          <span id="slot4r" class="ribbon ribbon-top-left"  ><span id="slot4b-data" name="slot4b-data"></span></span>          
-          <div  id="slot4" name="slot4" ></div>
-        </button>
-        <input showhide="teamsetup" class="posInput hide" name="slot4" id="slot4i"></input>
-      </div>        
+        <div swap="swaps">
+          <button showhide="teamsetup" class="posInput" id="slot4b">
+            <span id="slot4r" class="ribbon ribbon-top-left"><span id="slot4b-data" name="slot4b-data"></span></span>
+            <div id="slot4" name="slot4"></div>
+          </button>
+          <input showhide="teamsetup" class="posInput hide" name="slot4" id="slot4i"></input>
+        </div>
+      </div>
       <div id="front-5">
-        <button showhide="teamsetup" class="posInput" id="slot5b"  swap="swaps" >
-          <span id="slot5r" class="ribbon ribbon-top-left"  ><span id="slot5b-data" name="slot5b-data"></span></span>          
-          <div  id="slot5" name="slot5" ></div>
-        </button>
-        <input showhide="teamsetup" class="posInput hide" name="slot5" id="slot5i"></input>
-      </div>        
+        <div swap="swaps">
+          <button showhide="teamsetup" class="posInput" id="slot5b">
+            <span id="slot5r" class="ribbon ribbon-top-left"><span id="slot5b-data" name="slot5b-data"></span></span>
+            <div id="slot5" name="slot5"></div>
+          </button>
+          <input showhide="teamsetup" class="posInput hide" name="slot5" id="slot5i"></input>
+        </div>
+      </div>
 
 
       <div id="mid-1">
-        <button showhide="teamsetup" class="posInput" id="slot6b"  swap="swaps" >
-          <span id="slot6r" class="ribbon ribbon-top-left"  ><span id="slot6b-data" name="slot6b-data"></span></span>          
-          <div  id="slot6" name="slot6" ></div>
-        </button>
-        <input showhide="teamsetup" class="posInput hide" name="slot6" id="slot6i"></input>
-      </div>        
+        <div swap="swaps">
+          <button showhide="teamsetup" class="posInput" id="slot6b" swap="swaps">
+            <span id="slot6r" class="ribbon ribbon-top-left"><span id="slot6b-data" name="slot6b-data"></span></span>
+            <div id="slot6" name="slot6"></div>
+          </button>
+          <input showhide="teamsetup" class="posInput hide" name="slot6" id="slot6i"></input>
+        </div>
+      </div>
       <div id="mid-2">
-        <button showhide="teamsetup" class="posInput" id="slot7b"  swap="swaps" >
-          <span id="slot7r" class="ribbon ribbon-top-left"  ><span id="slot7b-data" name="slot7b-data"></span></span>          
-          <div  id="slot7" name="slot7" ></div>
-        </button>
-        <input showhide="teamsetup" class="posInput hide" name="slot7" id="slot7i"></input>
-      </div>        
+        <div swap="swaps">
+          <button showhide="teamsetup" class="posInput" id="slot7b" swap="swaps">
+            <span id="slot7r" class="ribbon ribbon-top-left"><span id="slot7b-data" name="slot7b-data"></span></span>
+            <div id="slot7" name="slot7"></div>
+          </button>
+          <input showhide="teamsetup" class="posInput hide" name="slot7" id="slot7i"></input>
+        </div>
+      </div>
       <div id="mid-3">
-        <button showhide="teamsetup" class="posInput" id="slot8b"  swap="swaps" >
-          <span id="slot8r" class="ribbon ribbon-top-left"  ><span id="slot8b-data" name="slot8b-data"></span></span>          
-          <div  id="slot8" name="slot8" ></div>
-        </button>
-        <input showhide="teamsetup" class="posInput hide" name="slot8" id="slot8i"></input>
-      </div>        
+        <div swap="swaps">
+          <button showhide="teamsetup" class="posInput" id="slot8b" swap="swaps">
+            <span id="slot8r" class="ribbon ribbon-top-left"><span id="slot8b-data" name="slot8b-data"></span></span>
+            <div id="slot8" name="slot8"></div>
+          </button>
+          <input showhide="teamsetup" class="posInput hide" name="slot8" id="slot8i"></input>
+        </div>
+      </div>
       <div id="mid-4">
-        <button showhide="teamsetup" class="posInput" id="slot9b"  swap="swaps" >
-          <span id="slot9r" class="ribbon ribbon-top-left"  ><span id="slot9b-data" name="slot9b-data"></span></span>          
-          <div  id="slot9" name="slot9" ></div>
-        </button>
-        <input showhide="teamsetup" class="posInput hide" name="slot9" id="slot9i"></input>
-      </div>        
+        <div swap="swaps">
+          <button showhide="teamsetup" class="posInput" id="slot9b" swap="swaps">
+            <span id="slot9r" class="ribbon ribbon-top-left"><span id="slot9b-data" name="slot9b-data"></span></span>
+            <div id="slot9" name="slot9"></div>
+          </button>
+          <input showhide="teamsetup" class="posInput hide" name="slot9" id="slot9i"></input>
+        </div>
+      </div>
       <div id="mid-5">
-        <button showhide="teamsetup" class="posInput" id="slot10b"  swap="swaps" >
-          <span id="slot10r" class="ribbon ribbon-top-left"  ><span id="slot10b-data" name="slot10b-data"></span></span>          
-          <div  id="slot10" name="slot10" ></div>
-        </button>
-        <input showhide="teamsetup" class="posInput hide" name="slot10" id="slot10i"></input>
-      </div>        
-                
+        <div swap="swaps">
+          <button showhide="teamsetup" class="posInput" id="slot10b" swap="swaps">
+            <span id="slot10r" class="ribbon ribbon-top-left"><span id="slot10b-data" name="slot10b-data"></span></span>
+            <div id="slot10" name="slot10"></div>
+          </button>
+          <input showhide="teamsetup" class="posInput hide" name="slot10" id="slot10i"></input>
+        </div>
+      </div>
+
       <div id="back-1">
-        <button showhide="teamsetup" class="posInput" id="slot11b"  swap="swaps" >
-          <span id="slot11r" class="ribbon ribbon-top-left"  ><span id="slot11b-data" name="slot11b-data"></span></span>          
-          <div  id="slot11" name="slot11" ></div>
-        </button>
-        <input showhide="teamsetup" class="posInput hide" name="slot11" id="slot11i"></input>
-      </div>        
+        <div swap="swaps">
+          <button showhide="teamsetup" class="posInput" id="slot11b" swap="swaps">
+            <span id="slot11r" class="ribbon ribbon-top-left"><span id="slot11b-data" name="slot11b-data"></span></span>
+            <div id="slot11" name="slot11"></div>
+          </button>
+          <input showhide="teamsetup" class="posInput hide" name="slot11" id="slot11i"></input>
+        </div>
+      </div>
       <div id="back-2">
-        <button showhide="teamsetup" class="posInput" id="slot12b"  swap="swaps" >
-          <span id="slot12r" class="ribbon ribbon-top-left"  ><span id="slot12b-data" name="slot12b-data"></span></span>          
-          <div  id="slot12" name="slot12" ></div>
-        </button>
-        <input showhide="teamsetup" class="posInput hide" name="slot12" id="slot12i"></input>
-      </div>        
+        <div swap="swaps">
+          <button showhide="teamsetup" class="posInput" id="slot12b" swap="swaps">
+            <span id="slot12r" class="ribbon ribbon-top-left"><span id="slot12b-data" name="slot12b-data"></span></span>
+            <div id="slot12" name="slot12"></div>
+          </button>
+          <input showhide="teamsetup" class="posInput hide" name="slot12" id="slot12i"></input>
+        </div>
+      </div>
       <div id="back-3">
-        <button showhide="teamsetup" class="posInput" id="slot13b"  swap="swaps" >
-          <span id="slot13r" class="ribbon ribbon-top-left"  ><span id="slot13b-data" name="slot13b-data"></span></span>          
-          <div  id="slot13" name="slot13" ></div>
-        </button>
-        <input showhide="teamsetup" class="posInput hide" name="slot13" id="slot13i"></input>
-      </div>        
+        <div swap="swaps">
+          <button showhide="teamsetup" class="posInput" id="slot13b" swap="swaps">
+            <span id="slot13r" class="ribbon ribbon-top-left"><span id="slot13b-data" name="slot13b-data"></span></span>
+            <div id="slot13" name="slot13"></div>
+          </button>
+          <input showhide="teamsetup" class="posInput hide" name="slot13" id="slot13i"></input>
+        </div>
+      </div>
       <div id="back-4">
-        <button showhide="teamsetup" class="posInput" id="slot14b"  swap="swaps" >
-          <span id="slot14r" class="ribbon ribbon-top-left"  ><span id="slot14b-data" name="slot14b-data"></span></span>          
-          <div  id="slot14" name="slot14" ></div>
-        </button>
-        <input showhide="teamsetup" class="posInput hide" name="slot14" id="slot14i"></input>
-      </div>        
+        <div swap="swaps">
+          <button showhide="teamsetup" class="posInput" id="slot14b" swap="swaps">
+            <span id="slot14r" class="ribbon ribbon-top-left"><span id="slot14b-data" name="slot14b-data"></span></span>
+            <div id="slot14" name="slot14"></div>
+          </button>
+          <input showhide="teamsetup" class="posInput hide" name="slot14" id="slot14i"></input>
+        </div>
+      </div>
       <div id="back-5">
-        <button showhide="teamsetup" class="posInput" id="slot15b"  swap="swaps" >
-          <span id="slot15r" class="ribbon ribbon-top-left"  ><span id="slot15b-data" name="slot15b-data"></span></span>          
-          <div  id="slot15" name="slot15" ></div>
-        </button>
-        <input showhide="teamsetup" class="posInput hide" name="slot15" id="slot15i"></input>
-      </div>    
-      
-      
+        <div swap="swaps">
+          <button showhide="teamsetup" class="posInput" id="slot15b" swap="swaps">
+            <span id="slot15r" class="ribbon ribbon-top-left"><span id="slot15b-data" name="slot15b-data"></span></span>
+            <div id="slot15" name="slot15"></div>
+          </button>
+          <input showhide="teamsetup" class="posInput hide" name="slot15" id="slot15i"></input>
+        </div>
+      </div>
+
+
       <div></div>
       <div></div>
       <div id="goalie">
-        <button showhide="teamsetup" class="posInput" id="slot16b"  swap="swaps" >
-          <span id="slot16r" class="ribbon ribbon-top-left"  ><span id="slot16b-data" name="slot16b-data"></span></span>          
-          <div  id="slot16" name="slot16" ></div>
-        </button>
-        <input showhide="teamsetup" class="posInput hide" name="slot16" id="slot16i"></input>
-      </div>        
+        <div swap="swaps">
+          <button showhide="teamsetup" class="posInput" id="slot16b" swap="swaps">
+            <span id="slot16r" class="ribbon ribbon-top-left"><span id="slot16b-data" name="slot16b-data"></span></span>
+            <div id="slot16" name="slot16"></div>
+          </button>
+          <input showhide="teamsetup" class="posInput hide" name="slot16" id="slot16i"></input>
+        </div>
+      </div>
       <div></div>
       <div></div>
 
 
     </div>
-      <div class="sub">BENCH</div>
-        <div class="bench" >
-            <div id="bench-1">
-              <button showhide="teamsetup" class="posInput" id="slot17b"  swap="swaps" >
-                <span id="slot17r" class="ribbon ribbon-top-left"  ><span id="slot17b-data" name="slot17b-data"></span></span>          
-                <div  id="slot17" name="slot17" ></div>
-              </button>
-              <input showhide="teamsetup" class="posInput hide" name="slot17" id="slot17i"></input>
-            </div>
-            <div id="bench-2">
-              <button showhide="teamsetup" class="posInput" id="slot18b"  swap="swaps" >
-                <span id="slot18r" class="ribbon ribbon-top-left"  ><span id="slot18b-data" name="slot18b-data"></span></span>          
-                <div  id="slot18" name="slot18" ></div>
-              </button>
-              <input showhide="teamsetup" class="posInput hide" name="slot18" id="slot18i"></input>
-            </div>
-            <div id="bench-3">
-              <button showhide="teamsetup" class="posInput" id="slot19b"  swap="swaps" >
-                <span id="slot19r" class="ribbon ribbon-top-left"  ><span id="slot19b-data" name="slot19b-data"></span></span>          
-                <div  id="slot19" name="slot19" ></div>
-              </button>
-              <input showhide="teamsetup" class="posInput hide" name="slot19" id="slot19i"></input>
-            </div>
-            <div id="bench-4">
-              <button showhide="teamsetup" class="posInput" id="slot20b"  swap="swaps" >
-                <span id="slot20r" class="ribbon ribbon-top-left"  ><span id="slot20b-data" name="slot20b-data"></span></span>          
-                <div  id="slot20" name="slot20" ></div>
-              </button>
-              <input showhide="teamsetup" class="posInput hide" name="slot20" id="slot20i"></input>
-            </div>
-            <div id="bench-5">
-              <button showhide="teamsetup" class="posInput" id="slot21b"  swap="swaps" >
-                <span id="slot21r" class="ribbon ribbon-top-left"  ><span id="slot21b-data" name="slot21b-data"></span></span>          
-                <div  id="slot21" name="slot21" ></div>
-              </button>
-              <input showhide="teamsetup" class="posInput hide" name="slot21" id="slot21i"></input>
-            </div>
+    <div class="sub">BENCH</div>
+    <div class="bench">
+      <div id="bench-1">
+        <div swap="swaps">
+          <button showhide="teamsetup" class="posInput" id="slot17b">
+            <span id="slot17r" class="ribbon ribbon-top-left"><span id="slot17b-data" name="slot17b-data"></span></span>
+            <div id="slot17" name="slot17"></div>
+          </button>
+          <input showhide="teamsetup" class="posInput hide" name="slot17" id="slot17i"></input>
+        </div>
+      </div>
+      <div id="bench-2">
+        <div swap="swaps">
+          <button showhide="teamsetup" class="posInput" id="slot18b" swap="swaps">
+            <span id="slot18r" class="ribbon ribbon-top-left"><span id="slot18b-data" name="slot18b-data"></span></span>
+            <div id="slot18" name="slot18"></div>
+          </button>
+          <input showhide="teamsetup" class="posInput hide" name="slot18" id="slot18i"></input>
+        </div>
+      </div>
+      <div id="bench-3">
+        <div swap="swaps">
+          <button showhide="teamsetup" class="posInput" id="slot19b" swap="swaps">
+            <span id="slot19r" class="ribbon ribbon-top-left"><span id="slot19b-data" name="slot19b-data"></span></span>
+            <div id="slot19" name="slot19"></div>
+          </button>
+          <input showhide="teamsetup" class="posInput hide" name="slot19" id="slot19i"></input>
+        </div>
+      </div>
+      <div id="bench-4">
+        <div swap="swaps">
+          <button showhide="teamsetup" class="posInput" id="slot20b" swap="swaps">
+            <span id="slot20r" class="ribbon ribbon-top-left"><span id="slot20b-data" name="slot20b-data"></span></span>
+            <div id="slot20" name="slot20"></div>
+          </button>
+          <input showhide="teamsetup" class="posInput hide" name="slot20" id="slot20i"></input>
+        </div>
+      </div>
+      <div id="bench-5">
+        <div swap="swaps">
+          <button showhide="teamsetup" class="posInput" id="slot21b" swap="swaps">
+            <span id="slot21r" class="ribbon ribbon-top-left"><span id="slot21b-data" name="slot21b-data"></span></span>
+            <div id="slot21" name="slot21"></div>
+          </button>
+          <input showhide="teamsetup" class="posInput hide" name="slot21" id="slot21i"></input>
         </div>
       </div>
     </div>
-    <div id="results" class="results">
-      <div class="sub">Time</div>
-      <div class="sub">Event</div>
-      <div class="sub">Undo</div>
-    </div>
-    
-    <button class="bigbut hide" name="finished" id="finished">Final Whistle</button>
-  </body>
-  <script type="module" src="./js/index.fs.js"></script>
+  </div>
+  </div>
+  <div id="results" class="results">
+    <div class="sub">Time</div>
+    <div class="sub">Event</div>
+    <div class="sub">Undo</div>
+  </div>
 
-  </html>
+  <button class="bigbut hide" name="finished" id="finished">Final Whistle</button>
+</body>
+<script type="module" src="./js/index.fs.js"></script>
+
+</html>
