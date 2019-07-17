@@ -6,6 +6,7 @@ body {
   font-weight: bolder;
   border: red;
   border-style: solid;
+  border-width: 5px;
 }
 
 .hide {
@@ -149,7 +150,7 @@ input {
 
 
 .pos {
-  margin: 10px
+  margin: 10px;
   background-color: #b1d6b1;
   position: relative;
   width: 90%;
@@ -251,6 +252,6 @@ input {
 .bench {
   display: grid;
   grid-template-columns: 2fr 2fr 2fr 2fr 2fr;
-  grid-template-rows: 100px;
+  grid-template-rows: 150px;
   grid-gap: 10px;
 }
