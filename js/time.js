@@ -1,4 +1,4 @@
-export function timer(minutesElement, secondsElement, underLimit = 10) {
+export function timer(minutesElement, secondsElement, underLimit = 30) {
   const increment = incrementFn(minutesElement, secondsElement, underLimit);
   const reset = resetFn(minutesElement, secondsElement, underLimit);
   return {

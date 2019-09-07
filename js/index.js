@@ -95,6 +95,7 @@ const playerScored = e => {
 
 const kickoff = () => {
   setMode("kickoff");  
+  document.getElementById("where").style.display = "none";
   document.getElementById("kickoff-grid").style.display = "none";
   document.getElementById("finished").classList.remove("hide");
   clear();
