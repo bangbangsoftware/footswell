@@ -129,7 +129,7 @@ const toggleWhere = () => {
 };
 
 const reset = () => {
-  events.post({ detail: "New quarter" });
+  events.post({ detail: "Second Half" });
   clock.reset();
 };
 
