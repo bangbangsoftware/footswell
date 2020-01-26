@@ -2,7 +2,7 @@ import { bagItAndTagIt, put, get, setMode, getMode } from "binder";
 import { swapperPlugin } from "binder/dist/plugins/swapperPlugin";
 import { togglePlugin } from "binder/dist/plugins/togglePlugin";
 import { showHidePlugin } from "binder/dist/plugins/showhidePlugin";
-import { ifPlugin } from "binder/dist/plugins/ifPlugin"; 
+import { ifPlugin } from "binder/dist/plugins/ifPlugin";
 import { banner } from "./banner";
 import { timer } from "./time";
 import { clear, tracker } from "./results";
@@ -13,7 +13,7 @@ const group = "swaps";
 const actionID = "captain-butt";
 const data = "- Captian -";
 const dataIDpostFix = "data";
-const mover = { group, actionID, data, dataIDpostFix};
+const mover = { group, actionID, data, dataIDpostFix };
 actionMover(mover);
 
 let running = null;
@@ -43,6 +43,9 @@ kickoffBut.addEventListener("click", () => kickoff());
 const concedeBut = document.getElementById("vrsScore");
 concedeBut.addEventListener("click", () => concede());
 
+const concedeBut2 = document.getElementById("vrsNameButton");
+concedeBut2.addEventListener("click", () => concede());
+
 const infoBut1 = document.getElementById("updateInfo");
 infoBut1.addEventListener("click", () => postForm());
 
@@ -57,7 +60,7 @@ edit.addEventListener("click", () => toggleEdit());
 
 const setupPlayers = () => {
   for (let n = 1; n < 22; n++) {
-    const el = document.getElementById("slot" + n+"b");
+    const el = document.getElementById("slot" + n + "b");
     try {
       el.addEventListener("click", e => playerScored(e));
     } catch (ex) {
@@ -68,11 +71,17 @@ const setupPlayers = () => {
 };
 
 banner();
-bagItAndTagIt([swapPlugin, swapperPlugin, togglePlugin, showHidePlugin, ifPlugin]);
+bagItAndTagIt([
+  swapPlugin,
+  swapperPlugin,
+  togglePlugin,
+  showHidePlugin,
+  ifPlugin
+]);
 setupPlayers();
 
 const playerScored = e => {
-  if (getMode() !== "kickoff"){
+  if (getMode() !== "kickoff") {
     return;
   }
   const element = e.target;
@@ -94,10 +103,15 @@ const playerScored = e => {
 };
 
 const kickoff = () => {
-  setMode("kickoff");  
+  setMode("kickoff");
   document.getElementById("where").style.display = "none";
   document.getElementById("kickoff-grid").style.display = "none";
   document.getElementById("finished").classList.remove("hide");
+  document.getElementById("vrsNameButton").classList.remove("hide");
+  document.getElementById("score").classList.remove("hide");
+  document.getElementById("vrsScore").classList.remove("hide");
+  document.getElementById("time").classList.remove("hide");
+  document.getElementById("opposition").style.display = "none";
   clear();
   const detail = createKickOffText();
   events.post({ detail });
@@ -118,7 +132,7 @@ const createKickOffText = (toggle = false) => {
 
 const toggleEdit = () => {
   const current = getMode();
-  const nextMode= (current == "edit")? "": "edit";
+  const nextMode = current == "edit" ? "" : "edit";
   setMode(nextMode);
 };
 
@@ -128,20 +142,25 @@ const toggleWhere = () => {
   events.replacePost(last, updated);
 };
 
+let lastUpdate;
 const reset = () => {
   events.post({ detail: "Second Half" });
   clock.reset();
+  lastUpdate = new Date();
 };
 
 const playOn = () => {
-  setMode("kickoff");  
-  running = setInterval(clock.increment, 1000);
+  setMode("kickoff");
+  lastUpdate = new Date();
+  running = setInterval(() => {
+    lastUpdate = clock.adjust(lastUpdate);
+  }, 1000);
   document.getElementById("whistle").classList.remove("hide");
   document.getElementById("stateblock").style.display = "none";
 };
 
 const paused = () => {
-  setMode("");  
+  setMode("");
   document.getElementById("whistle").classList.add("hide");
   document.getElementById("stateblock").style.display = "grid";
   clearInterval(running);
@@ -153,8 +172,19 @@ const ender = ev => {
   const vrsScore = document.getElementById("vrsScore").innerText;
   const score = document.getElementById("score").innerText;
   const vrsName = document.getElementById("opposition").value;
-  const name    = document.getElementById("teamName").value;
-  events.post({ detail: "Final Whistle- "+name+":"+score+" vrs "+vrsName+": "+vrsScore+"" });
+  const name = document.getElementById("teamName").value;
+  events.post({
+    detail:
+      "Final Whistle- " +
+      name +
+      ":" +
+      score +
+      " vrs " +
+      vrsName +
+      ": " +
+      vrsScore +
+      ""
+  });
   events.download();
   const kickoffBut = document.getElementById("kickoff");
   kickoffBut.style.display = "block";
@@ -169,10 +199,10 @@ const concede = () => {
   });
 };
 
-const getInnerNames = id =>{
+const getInnerNames = id => {
   const el = document.getElementById(id);
-  if (el == null){
-    console.error(id+" doesn't exist?!");
+  if (el == null) {
+    console.error(id + " doesn't exist?!");
     return null;
   }
   return getNames(el);
@@ -183,58 +213,62 @@ const getNames = (el, list = []) => {
   if (name != null) {
     list.push(name);
   }
-  if (el.children.length > 0){
+  if (el.children.length > 0) {
     for (let i = 0; i < el.children.length; i++) {
-      list = getNames(el.children[i], list);     
+      list = getNames(el.children[i], list);
     }
   }
   return list;
 };
-  
-const isCaptain = names =>{
+
+const isCaptain = names => {
   const key = names.find(name => name.indexOf(dataIDpostFix) > -1);
-  if (key == null){
+  if (key == null) {
     return false;
   }
-  const captain = get(key);
-  return captain.currentValue.length > 0;
+  try {
+    const captain = get(key);
+    return captain.currentValue.length > 0;
+  } catch (error) {
+    console.error(error);
+  }
+  return false;
 };
 
-const getPlayerName = element =>{
+const getPlayerName = element => {
   const names = getNames(element);
   return getPlayerNameFromList(names);
-};  
+};
 
-const getPlayerNameFromList = names =>{
+const getPlayerNameFromList = names => {
   const key = names.find(name => name.indexOf(dataIDpostFix) == -1);
-  if (key == null){
+  if (key == null) {
     return null;
   }
-  const playerName =  get(key);
+  const playerName = get(key);
   return playerName.currentValue;
 };
 
-
-const getFormation = (prefix, n = 1, output = "")=>{
-  if (n > 5){
+const getFormation = (prefix, n = 1, output = "") => {
+  if (n > 5) {
     return output;
   }
-  const id = prefix+"-" + n;
+  const id = prefix + "-" + n;
   const names = getInnerNames(id);
-  const playerName = getPlayerNameFromList(names); 
+  const playerName = getPlayerNameFromList(names);
   const isCap = isCaptain(names);
-  const cap = (isCap)? "(Captain)":"";
+  const cap = isCap ? "(Captain)" : "";
   if (playerName == null) {
-    console.error(id+" has no player name ?!!");
+    console.error(id + " has no player name ?!!");
   } else {
     const player = playerName + cap;
     output = output === "" ? player : output + ", " + player;
   }
-  return getFormation(prefix, n+1, output);
+  return getFormation(prefix, n + 1, output);
 };
 
 const adder = (tag, prefix) => {
-  const positions = getFormation(prefix,1, "");
+  const positions = getFormation(prefix, 1, "");
   if (!positions) {
     return "";
   }
@@ -243,8 +277,8 @@ const adder = (tag, prefix) => {
 
 const getGoalie = () => {
   const names = getInnerNames("goalie");
-  const playerName = getPlayerNameFromList(names); 
-  return "Goalie: "+playerName;
+  const playerName = getPlayerNameFromList(names);
+  return "Goalie: " + playerName;
 };
 
 const postForm = () => {
@@ -253,6 +287,6 @@ const postForm = () => {
   const back = adder("Back", "back");
   const goal = getGoalie();
   const detail = "Formation-  " + front + mid + back + goal;
-  console.log("FORMATION ",detail);
+  console.log("FORMATION ", detail);
   events.post({ detail });
 };

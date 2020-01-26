@@ -1,16 +1,37 @@
 export function timer(minutesElement, secondsElement, underLimit = 30) {
-  const increment = incrementFn(minutesElement, secondsElement, underLimit);
+  const adjust = adjustFn(minutesElement, secondsElement, underLimit);
   const reset = resetFn(minutesElement, secondsElement, underLimit);
   return {
-    increment,
-    reset
+    reset,
+    adjust
   };
 }
 
-const incrementFn = (minutesElement, secondsElement, underLimit) => () => {
-  const secs = parseInt(secondsElement.innerText) + 1;
+const timeDiff = totalSeconds => {
+  if (totalSeconds < 60) {
+    const minutes = 0;
+    const seconds = totalSeconds;
+    return { minutes, seconds };
+  }
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = Math.round(totalSeconds % 60);
+  return { minutes, seconds };
+};
+
+const adjustFn = (minutesElement, secondsElement, underLimit) => updatedAt => {
+  const now = new Date();
+  const totalSeconds = Math.round((now.getTime() - updatedAt.getTime()) / 1000);
+  const toAdd = timeDiff(totalSeconds);
+  incrementMinutes(minutesElement, secondsElement, underLimit, toAdd.minutes);
+  incrementSeconds(minutesElement, secondsElement, underLimit, toAdd.seconds);
+  return now;
+};
+
+const incrementSeconds = (minutesElement, secondsElement, underLimit, by) => {
+  const secs = parseInt(secondsElement.innerText) + by;
   if (secs > 59) {
-    incrementSeconds(minutesElement, secondsElement, underLimit);
+    secondsElement.innerText = "00";
+    incrementMinutes(minutesElement, secondsElement, underLimit);
     return;
   }
   secondsElement.innerText = secs < 10 ? `0${secs}` : secs;
@@ -30,16 +51,13 @@ export function timeFormat(date = new Date()) {
   return `${hr}:${mn}:${sc}`;
 }
 
-const incrementSeconds = (minutes, seconds, underLimit) => {
-  seconds.innerText = 0;
-  const mins = parseInt(minutes.innerText) + 1;
-  if (mins < underLimit) {
-    minutes.innerText = "0" + mins;
-    return;
+const incrementMinutes = (minutes, seconds, underLimit, by = 1) => {
+  const mins = parseInt(minutes.innerText) + by;
+  if (mins == underLimit) {
+    seconds.classList.add("red");
+    minutes.classList.add("red");
   }
   minutes.innerText = zeroFill(mins);
-  seconds.classList.add("red");
-  minutes.classList.add("red");
 };
 
 const zeroFill = i => {

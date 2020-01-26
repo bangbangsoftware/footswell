@@ -15,12 +15,15 @@
     <input butlab class="name" name="teamName" placeholder="Team name" id="teamName" value=""></input>
     <div class="sub center">vrs</div>
     <input butlab class="name" name="vrsTeam" placeholder="Opposition name" id="opposition" value=""></input>
-    <div id="score" name="score" class="sub center">0</div>
-    <div id="time" class="time">
-      <div id="minutes">00</div>:<div id="seconds">00</div>
-    </div>
-    <button id="vrsScore" name="vrsScore" class="vrsScore" value="0"></button>
+    <button id="vrsNameButton" name="vrsTeam" class="kickoff hide"></button>
+      <div id="score" name="score" class="hide sub center">0</div>
+      <div id="time" class="hide time">
+        <div id="minutes">00</div>:<div id="seconds">00</div>
+      </div>
+      <div id="vrsScore" name="vrsScore" class="vrsScore hide" value="0"></div>
+    </span>
   </div>
+  </br>
   <div class="scored hide" name="scored" id="scored">SHS</div>
   <div class="kickoff" id="kickoff-grid">
     <button showhide-trigger="teamsetup" id="edit">Edit</button>
@@ -30,7 +33,7 @@
   </div>
   <div id="stateblock" class="kickoff hide">
     <button showhide-trigger="teamsetup" id="edit2">Edit</button>
-    <button id="reset">Reset clock</button>
+    <button id="reset">Reset clock <br> (Second Half)</button>
     <button id="playon">Play On</button>
     <button id="updateInfo2">Update formation</button>
   </div>
