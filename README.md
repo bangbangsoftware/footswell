@@ -16,6 +16,8 @@ Then kick off!
 * cross out mistakes
 * Final whistle, download the CVS of the match (without the mistakes)
 
+IT ALL WORKS OFF LINE - as it uses local storage
+
 ## Installing / Getting started
 
 This is hosted on github pages [here](http://bangbangsoftware.github.io/footswell/).
