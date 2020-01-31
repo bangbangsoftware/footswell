@@ -8,7 +8,13 @@ Set up:
 * Home or away?
 * The opponent team name. 
 
-Then kick off and record the goals. Who scored and when. Pause the clock, move players around.
+Then kick off! 
+
+* Record who scored and when, 
+* Pause the clock 
+* Move players around when paused
+* cross out mistakes
+* Final whistle, download the CVS of the match (without the mistakes)
 
 ## Installing / Getting started
 
