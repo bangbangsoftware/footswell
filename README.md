@@ -1,11 +1,18 @@
 #  Foot Swell 
-> An five a side football app. 
+> A football app for scoring kids games. 
 
-Set up your under eights, five a side team and record the goals.
+Set up:
+* Team name
+* Your players
+* Who is the captain
+* Home or away?
+* The opponent team name. 
+
+Then kick off and record the goals. Who scored and when. Pause the clock, move players around.
 
 ## Installing / Getting started
 
-This is hosted on github pages [here](http://bangbangsoftware.github.io/footswell/).1
+This is hosted on github pages [here](http://bangbangsoftware.github.io/footswell/).
 A quick introduction of the minimal setup you need to get a hello world up &
 running.
 
@@ -13,14 +20,11 @@ running.
 
 Everything is stored locally, so as long as your local storage is safe, so is your data.
 
-A pure js application that makes great use of local storage. 
+A pure js application that makes great use of local storage using [binder] (https://github.com/bangbangsoftware/binder). 
 
 ```shell
 # install dependencies
 npm install
-
-# To setup local couch db instance for this project using docker
-npm run docker
 
 # serve with hot reload at [http://127.0.0.1:8080/](http://127.0.0.1:8080/)
 npm start
@@ -28,18 +32,12 @@ npm start
 # build for production with minification 
 npm run build - yet to do 
 
-# run unit tests
-npm run unit - currently there are none
-
-# run e2e tests
-npm run e2e - currently there are none
-
-# run all tests
-npm test
+# run test
+npm run unit - could be better
 ```
 
 ### Built with
-Nothing, just pure JS.
+Binder which is just pure JS and tiny.
 
 ### Prerequisites
 Nothing, no back end, no babel... just go.
