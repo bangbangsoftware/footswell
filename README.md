@@ -1,5 +1,3 @@
-![Logo of the project](logo.png)
-
 #  Foot Swell 
 > An five a side football app. 
 
