@@ -14,12 +14,13 @@ describe("Timer...", () => {
     expect(clock).toBeDefined();
   });
 
-  it("should be able to increment", () => {
+  // increment removed and replaced by adjust which works relative to a date
+  xit("should be able to increment", () => {
     clock.increment();
     expect(secondsElement.innerText).toBe("01");
   });
 
-  it("should be able to increment to a minute", () => {
+  xit("should be able to increment to a minute", () => {
     for (let x = 0; x < 60; x++) {
       clock.increment();
     }
