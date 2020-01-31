@@ -92,7 +92,7 @@ Undecided.
 
 ## Configuration
 
-There is zero configuration as of yet apart from setting up the inital team
+There is zero configuration.
 
 ## Style guide
 
