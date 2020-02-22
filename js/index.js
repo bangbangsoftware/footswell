@@ -136,6 +136,7 @@ const toggleEdit = () => {
   setMode(nextMode);
 };
 
+
 const toggleWhere = () => {
   const last = createKickOffText();
   const updated = createKickOffText(true);

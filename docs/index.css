@@ -27,6 +27,11 @@ body {
   justify-self: center;
 }
 
+.phoneNo {
+  margin: 10px;
+  padding: 5px;
+}
+
 .sub {
   font-size: 40px;
   font-weight: bolder;
@@ -244,7 +249,7 @@ input {
 
 .results {
   display: grid;
-  grid-template-columns: 3fr 10fr 1fr;
+  grid-template-columns: 3fr 10fr 1fr 1fr;
   grid-gap: 10px;
 }
 

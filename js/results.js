@@ -1,12 +1,9 @@
 import { timeFormat } from "./time";
+// import { get } from "binder";
 
 let resultRows = [];
 export function clear() {
   resultRows = [];
-}
-
-export function get() {
-  return resultRows.map(m => m);
 }
 
 const changer = doc => (num, name = "score") => {
@@ -35,14 +32,42 @@ const undoToggle = changeScore => evt => {
 
 const replacePost = (from, to) => {
   const oldResult = resultRows.find(el => el.detail === from);
-  oldResult.element.innerText = ""+to;
-  oldResult.detail = ""+to;
+  oldResult.element.innerText = "" + to;
+  oldResult.detail = "" + to;
+};
+
+const send = async (evt) => {
+//  const yourNumber = get("phoneNo").currentValue;
+  const yourMessage = evt.detail;
+//  const number = yourNumber;
+  if (!navigator.share) {
+    console.error("web share not supported");
+    return;
+  }
+
+  try {
+    await navigator.share({
+      title: "Footswell",
+      text: yourMessage,
+      url: window.location.href
+    });
+    console.log("Thanks for sharing!");
+  } catch (err) {
+    console.log(`Couldn't share because of`, err.message);
+  }
+  /** 
+  const  message =  encodeURIComponent(yourMessage);
+  
+  console.log("https://api.whatsapp.com/send?phone=" + number + "&text=%20" + message);
+  return fetch("https://api.whatsapp.com/send?phone=" + number + "&text=%20" + message);
+*/
 };
 
 export function tracker(doc, main) {
   const changeScore = changer(doc);
   const undoToggleFn = undoToggle(changeScore);
-  const post = postFn(doc, main, undoToggleFn, changeScore);
+  const sendFn = send;
+  const post = postFn(doc, main, undoToggleFn, changeScore, sendFn);
   const download = downloadFn(doc);
   return {
     changeScore,
@@ -52,8 +77,10 @@ export function tracker(doc, main) {
   };
 }
 
-const postFn = (doc, main, toggle, changeScore) => evt => {
+const postFn = (doc, main, toggle, changeScore, sendFn) => evt => {
   evt.time = timeFormat();
+  evt.id = resultRows.length;
+  evt.crossedOut = false;
 
   const time = doc.createElement("div");
   time.createName = "time";
@@ -71,12 +98,24 @@ const postFn = (doc, main, toggle, changeScore) => evt => {
   del.classList.add("result");
   del.innerText = "X";
   del.addEventListener("click", () => toggle(evt));
-  evt.id = resultRows.length;
-  evt.crossedOut = false;
+
+  const send = doc.createElement("button");
+  send.createName = "send";
+  send.classList.add("result");
+  send.innerText = "Send";
+  send.addEventListener("click", () => sendFn(evt));
+  evt.id = "send" + resultRows.length;
 
   main.appendChild(time);
   main.appendChild(detail);
   main.appendChild(del);
+  if (navigator.share){
+    main.appendChild(send);
+  } else {
+    const lab = doc.createElement("label");
+    lab.innerText = "- Not supported -";
+    main.appendChild(lab);
+  }
 
   resultRows.push(evt);
 
