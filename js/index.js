@@ -1,4 +1,4 @@
-import { bagItAndTagIt, put, get, setMode, getMode } from "binder";
+import { bagItAndTagIt, put, get, setMode, getMode, tools } from "binder";
 import { swapperPlugin } from "binder/dist/plugins/swapperPlugin";
 import { togglePlugin } from "binder/dist/plugins/togglePlugin";
 import { showHidePlugin } from "binder/dist/plugins/showhidePlugin";
@@ -26,43 +26,43 @@ const mins = document.getElementById("minutes");
 const clock = timer(mins, secs);
 
 const resetBut = document.getElementById("reset");
-resetBut.addEventListener("click", () => reset());
+tools.clickListener(resetBut, () => reset());
 
 const playonBut = document.getElementById("playon");
-playonBut.addEventListener("click", () => playOn());
+tools.clickListener(playonBut, () => playOn());
 
 const whistleBut = document.getElementById("whistle");
-whistleBut.addEventListener("click", () => paused());
+tools.clickListener(whistleBut, () => paused(), ["kickoff"]);
 
 const finishedBut = document.getElementById("finished");
-finishedBut.addEventListener("click", ev => ender(ev));
+tools.clickListener(finishedBut, ev => ender(ev));
 
 const kickoffBut = document.getElementById("kickoff");
-kickoffBut.addEventListener("click", () => kickoff());
+tools.clickListener(kickoffBut, () => kickoff());
 
 const concedeBut = document.getElementById("vrsScore");
-concedeBut.addEventListener("click", () => concede());
+tools.clickListener(concedeBut, () => concede(), ["kickoff"]);
 
 const concedeBut2 = document.getElementById("vrsNameButton");
-concedeBut2.addEventListener("click", () => concede());
+tools.clickListener(concedeBut2, () => concede(), ["kickoff"]);
 
 const infoBut1 = document.getElementById("updateInfo");
-infoBut1.addEventListener("click", () => postForm());
+tools.clickListener(infoBut1, () => postForm());
 
 const infoBut2 = document.getElementById("updateInfo2");
-infoBut2.addEventListener("click", () => postForm());
+tools.clickListener(infoBut2, () => postForm());
 
 const where = document.getElementById("where");
-where.addEventListener("click", () => toggleWhere());
+tools.clickListener(where, () => toggleWhere());
 
 const edit = document.getElementById("edit");
-edit.addEventListener("click", () => toggleEdit());
+tools.clickListener(edit, () => toggleEdit());
 
 const setupPlayers = () => {
   for (let n = 1; n < 22; n++) {
     const el = document.getElementById("slot" + n + "b");
     try {
-      el.addEventListener("click", e => playerScored(e));
+      tools.clickListener(el, e => playerScored(e), ["kickoff"]);
     } catch (ex) {
       console.error(n + ". failed is it in the markup?");
       console.error(ex);
@@ -106,7 +106,6 @@ const kickoff = () => {
   setMode("kickoff");
   document.getElementById("where").style.display = "none";
   document.getElementById("kickoff-grid").style.display = "none";
-  document.getElementById("finished").classList.remove("hide");
   document.getElementById("vrsNameButton").classList.remove("hide");
   document.getElementById("score").classList.remove("hide");
   document.getElementById("vrsScore").classList.remove("hide");
@@ -156,12 +155,14 @@ const playOn = () => {
   running = setInterval(() => {
     lastUpdate = clock.adjust(lastUpdate);
   }, 1000);
+  document.getElementById("finished").classList.add("hide");
   document.getElementById("whistle").classList.remove("hide");
   document.getElementById("stateblock").style.display = "none";
 };
 
 const paused = () => {
   setMode("");
+  document.getElementById("finished").classList.remove("hide");
   document.getElementById("whistle").classList.add("hide");
   document.getElementById("stateblock").style.display = "grid";
   clearInterval(running);
